@@ -3669,12 +3669,28 @@ void Blockchain::check_against_checkpoints(const checkpoints& points, bool enfor
   if (stop_batch)
     m_db->batch_stop();
 }
+
+//------------------------------------------------------------------
+// returns false if any of the checkpoints loading returns false.
+// That should happen only if a checkpoint is added that conflicts
+// with an existing checkpoint.
+bool Blockchain::add_checkpoint(uint64_t height, const std::string& hash_str) {
+    // We're using the same method as when DNS checkpoints are enforced
+    if (!m_checkpoints.add_checkpoint(height, hash_str))
+    {
+      return false;
+    }
+    check_against_checkpoints(m_checkpoints, true);
+    return true;
+}
+
 //------------------------------------------------------------------
 // returns false if any of the checkpoints loading returns false.
 // That should happen only if a checkpoint is added that conflicts
 // with an existing checkpoint.
 bool Blockchain::update_checkpoints(const std::string& file_path, bool check_dns)
 {
+
   if (!m_checkpoints.load_checkpoints_from_json(file_path))
   {
       return false;

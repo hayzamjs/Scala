@@ -682,6 +682,19 @@ namespace cryptonote
      */
     void set_enforce_dns_checkpoints(bool enforce);
 
+
+    /**
+     * @brief adds a checkpoint to the current list of checkpoints
+     *
+     * @param height the height of the block the checkpoint is for
+     * @param hash_str the hash of the block, as a string
+     *
+     * @return false if parsing the hash fails, or if the height is a duplicate
+     *         AND the existing checkpoint hash does not match the new one,
+     *         otherwise returns true
+     */
+    bool add_checkpoint(uint64_t height, const std::string& hash_str);
+
     /**
      * @brief loads new checkpoints from a file and optionally from DNS
      *
@@ -797,7 +810,7 @@ namespace cryptonote
      * @param earliest_height the earliest height at which <version> is allowed
      * @param voting which version this node is voting for/using
      *
-     * @return whether the version queried is enabled 
+     * @return whether the version queried is enabled
      */
     bool get_hard_fork_voting_info(uint8_t version, uint32_t &window, uint32_t &votes, uint32_t &threshold, uint64_t &earliest_height, uint8_t &voting) const;
 

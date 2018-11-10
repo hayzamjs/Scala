@@ -185,7 +185,7 @@ namespace cryptonote
               m_checkpoints_path(""),
               m_last_dns_checkpoints_update(0),
               m_last_json_checkpoints_update(0),
-              m_disable_dns_checkpoints(false),
+              m_disable_dns_checkpoints(true), // Stellite doesn't use DNS checkpoints, disable by default
               m_update_download(0),
               m_nettype(UNDEFINED),
               m_update_available(false)
@@ -218,19 +218,62 @@ namespace cryptonote
   //-----------------------------------------------------------------------------------------------
   bool core::update_checkpoints()
   {
-    if (m_nettype != MAINNET || m_disable_dns_checkpoints) return true;
+
+    // if (m_nettype != MAINNET || m_disable_zn_checkpoints)
+    // {
+    //   return true;
+    // }
+    // else if (m_nettype != MAINNET || m_disable_dns_checkpoints) return true;
 
     if (m_checkpoints_updating.test_and_set()) return true;
 
     bool res = true;
-    if (time(NULL) - m_last_dns_checkpoints_update >= 3600)
+    m_blocks_added_since_zn_checkpoint++;
+    //if (m_blocks_added >= ZERONET_CHECKPOINT_INTERVAL)
+    if (true)
+    //if (m_last_zn_checkpoints_update >= 8)
+    // if (time(NULL) - m_last_zn_checkpoints_update >= 3600)
     {
+    //
+      std::cout << "\nZeroNet core::update_checkpoints (new block) at height " << get_blockchain_storage().get_current_blockchain_height() << "\n" << std::endl;
+
+      // We have a cache of checkpoints from ZeroNet available, we add the one that matches current height - interval
+      uint64_t requested_checkpoint_height = get_blockchain_storage().get_current_blockchain_height() - ZERONET_CHECKPOINT_INTERVAL;
+      // TEMP
+      requested_checkpoint_height--;
+      // END TEMP
+
+      char* checkpoint_hash = ZNGetCheckpointAt(requested_checkpoint_height);
+      std::cout << "Got ZN checkpoint: " << checkpoint_hash << std::endl;
+
+      if (strlen(checkpoint_hash) != 0)
+      {
+        res = m_blockchain_storage.add_checkpoint(requested_checkpoint_height, checkpoint_hash);
+        if (res == true)
+        {
+          MINFO("New ZeroNet checkpoint added at height " << requested_checkpoint_height << " (" << checkpoint_hash << ")");
+        }
+      }
+
+    //
+    //   res = m_blockchain_storage.update_checkpoints(m_checkpoints_path, true);
+    //   m_last_dns_checkpoints_update = time(NULL);
+    //   m_last_json_checkpoints_update = time(NULL);
+      m_blocks_added_since_zn_checkpoint = 0;
+    }
+    else if (time(NULL) - m_last_dns_checkpoints_update >= 3600)
+    //if (time(NULL) - m_last_dns_checkpoints_update >= 3600)
+    {
+      std::cout << "\nDNS checkpoint update\n" << std::endl;
+
       res = m_blockchain_storage.update_checkpoints(m_checkpoints_path, true);
       m_last_dns_checkpoints_update = time(NULL);
       m_last_json_checkpoints_update = time(NULL);
     }
     else if (time(NULL) - m_last_json_checkpoints_update >= 600)
     {
+      std::cout << "\nJSON checkpoint update\n" << std::endl;
+
       res = m_blockchain_storage.update_checkpoints(m_checkpoints_path, false);
       m_last_json_checkpoints_update = time(NULL);
     }
@@ -435,6 +478,10 @@ namespace cryptonote
     }
     // folder might not be a directory, etc, etc
     catch (...) { }
+
+    // If ZeroNet checkpoints are not disabled, start watching for checkpoints
+    // while the rest of the chain is initialized
+    ZNStartCheckpointCollection((char*)"/tmp", (char*)"112cGmr3FkQ7eiAgsPqPRtHX9vH8rrNFPo");
 
     std::unique_ptr<BlockchainDB> db(new_db(db_type));
     if (db == NULL)
@@ -1068,13 +1115,13 @@ if (!results[i].res)
       std::vector<transaction> txs;
       std::vector<crypto::hash> missed_txs;
       uint64_t coinbase_amount = get_outs_money_amount(b.miner_tx);
-      this->get_transactions(b.tx_hashes, txs, missed_txs);      
+      this->get_transactions(b.tx_hashes, txs, missed_txs);
       uint64_t tx_fee_amount = 0;
       for(const auto& tx: txs)
       {
         tx_fee_amount += get_tx_fee(tx);
       }
-      
+
       emission_amount += coinbase_amount - tx_fee_amount;
       total_fee_amount += tx_fee_amount;
       return true;
@@ -1248,6 +1295,9 @@ if (!results[i].res)
   //-----------------------------------------------------------------------------------------------
   bool core::handle_block_found(block& b)
   {
+    // HACK
+    update_checkpoints();
+    // END HACK
     block_verification_context bvc = boost::value_initialized<block_verification_context>();
     m_miner.pause();
     std::vector<block_complete_entry> blocks;
@@ -1425,7 +1475,7 @@ if (!results[i].res)
   bool core::get_pool_transaction(const crypto::hash &id, cryptonote::blobdata& tx) const
   {
     return m_mempool.get_transaction(id, tx);
-  }  
+  }
   //-----------------------------------------------------------------------------------------------
   bool core::pool_has_tx(const crypto::hash &id) const
   {
