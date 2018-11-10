@@ -45,6 +45,8 @@
 #include "math_helper.h"
 #include "net_node_common.h"
 #include "common/command_line.h"
+#include "rapidjson/document.h"
+#include "libznipfs/libznipfs.h"
 
 PUSH_WARNINGS
 DISABLE_VS_WARNINGS(4355)
@@ -86,6 +88,7 @@ namespace nodetool
     m_hide_my_port(false),
     m_no_igd(false),
     m_offline(false),
+    m_znipfs_disabled(false),
     m_save_graph(false),
     is_closing(false),
     m_net_server( epee::net_utils::e_connection_type_P2P ) // this is a P2P connection of the main p2p node server, because this is class node_server<>
@@ -295,6 +298,7 @@ namespace nodetool
     bool m_hide_my_port;
     bool m_no_igd;
     bool m_offline;
+    bool m_znipfs_disabled;
     std::atomic<bool> m_save_graph;
     std::atomic<bool> is_closing;
     std::unique_ptr<boost::thread> mPeersLoggerThread;
@@ -360,6 +364,8 @@ namespace nodetool
     extern const command_line::arg_descriptor<int64_t> arg_limit_rate;
 
     extern const command_line::arg_descriptor<bool> arg_save_graph;
+
+    extern const command_line::arg_descriptor<bool> arg_znipfs_disabled;
 }
 
 POP_WARNINGS

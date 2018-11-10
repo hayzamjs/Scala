@@ -62,6 +62,11 @@
 
 namespace nodetool
 {
+  // ZNIPFS: I define the zeronet addresses here. `const char *` would be a better option here but it seems like
+  // you can't pass consts into Go
+  char* zeronet_address = (char*)"1KvWEyqhyHsU9y6UT8xYCFDC8Y1vKaNueX";
+  char* zeronet_testnet_address = (char*)"1CH9ApTd83RM8ggz35pZApnKoZqDf7wXyh";
+
   inline bool append_net_address(std::vector<epee::net_utils::network_address> & seed_nodes, std::string const & addr, uint16_t default_port);
   //-----------------------------------------------------------------------------------
   template<class t_payload_net_handler>
@@ -84,6 +89,7 @@ namespace nodetool
     command_line::add_arg(desc, arg_limit_rate_down);
     command_line::add_arg(desc, arg_limit_rate);
     command_line::add_arg(desc, arg_save_graph);
+    command_line::add_arg(desc, arg_znipfs_disabled);
   }
   //-----------------------------------------------------------------------------------
   template<class t_payload_net_handler>
@@ -266,6 +272,7 @@ namespace nodetool
     m_allow_local_ip = command_line::get_arg(vm, arg_p2p_allow_local_ip);
     m_no_igd = command_line::get_arg(vm, arg_no_igd);
     m_offline = command_line::get_arg(vm, cryptonote::arg_offline);
+    m_znipfs_disabled = command_line::get_arg(vm, arg_znipfs_disabled);
 
     if (command_line::has_arg(vm, arg_p2p_add_peer))
     {
@@ -389,22 +396,86 @@ namespace nodetool
   std::set<std::string> node_server<t_payload_net_handler>::get_seed_nodes(cryptonote::network_type nettype) const
   {
     std::set<std::string> full_addrs;
-    if (nettype == cryptonote::TESTNET)
+
+    // If ZeroNet/IPFS is enabled we'll fetch the nodes using libznipfs. If
+    // the fetch fails we'll continue with the hardcoded nodes
+    bool znipfs_seedlist_failed = false;
+    if (!m_znipfs_disabled)
     {
-      full_addrs.insert("127.0.0.1:30188");
+      char *result_json = new char;
+      MGINFO("Fetching seed list from ZeroNet/IPFS...");
+
+      if (nettype == cryptonote::TESTNET)
+      {
+        result_json = ZNIPFSGetSeedList(zeronet_testnet_address);
+      }
+      else if (nettype == cryptonote::STAGENET)
+      {
+        // We don't have a ZeroNet address for stagenet
+      }
+      else if (nettype == cryptonote::FAKECHAIN)
+      {
+        // We don't have a ZeroNet address for fakechain
+      }
+      else
+      {
+        result_json = ZNIPFSGetSeedList(zeronet_address);
+      }
+
+      // The seedlist is returned in JSON, containing any errors or the seedlist
+      rapidjson::Document json;
+      if (json.Parse(result_json).HasParseError())
+      {
+        znipfs_seedlist_failed = true;
+        MWARNING("Unable to parse ZeroNet/IPFS result, falling back to hardcoded node list");
+      }
+
+      // Continue if parsing did not fail
+      if (!znipfs_seedlist_failed)
+      {
+        const char *znipfs_status = json["Status"].GetString();
+        if (strcmp(znipfs_status, "ok") == 0)
+        {
+          // All OK, insert into the seedlist
+          const rapidjson::Value& seedlist = json["Seedlist"];
+          assert(seedlist.IsArray());
+          for (rapidjson::SizeType i = 0; i < seedlist.Size(); i++)
+          {
+            MGINFO("Added seed from ZeroNet/IPFS: " << seedlist[i].GetString());
+            full_addrs.insert(seedlist[i].GetString());
+          }
+          MGINFO("Fetched the seedlist from ZeroNet/IPFS");
+        }
+        else
+        {
+          // If failed, it will print the reason and fall back to hardcoded nodes
+          znipfs_seedlist_failed = true;
+          MWARNING("Unable to get seedlist from ZeroNet/IPFS, " << json["Message"].GetString() << ". Falling back to hardcoded node list");
+        }
+      }
     }
-    else if (nettype == cryptonote::STAGENET)
+
+    // If we failed to retrieve the seedlist from ZeroNet/IPFS or it was disabled
+    if (m_znipfs_disabled || znipfs_seedlist_failed)
     {
-      full_addrs.insert("127.0.0.1:40188");
+      if (nettype == cryptonote::TESTNET)
+      {
+        full_addrs.insert("127.0.0.1:30188");
+      }
+      else if (nettype == cryptonote::STAGENET)
+      {
+        full_addrs.insert("127.0.0.1:40188");
+      }
+      else if (nettype == cryptonote::FAKECHAIN)
+      {
+      }
+      else
+      {
+        full_addrs.insert("139.180.198.68:20188");
+        full_addrs.insert("89.158.106.154:20188");
+      }
     }
-    else if (nettype == cryptonote::FAKECHAIN)
-    {
-    }
-    else
-    {
-      full_addrs.insert("139.180.198.68:20188");
-      full_addrs.insert("89.158.106.154:20188");
-    }
+
     return full_addrs;
   }
 
@@ -416,6 +487,39 @@ namespace nodetool
 
     bool res = handle_command_line(vm);
     CHECK_AND_ASSERT_MES(res, false, "Failed to handle command line");
+
+    // ZNIPFS: Set up the IPFS node if it hasn't been disabled
+    if (!m_znipfs_disabled) {
+      // We use the provided --data-dir as the base path for IPFS and
+      // ZeroNet storage as well
+      std::string data_dir = command_line::get_arg(vm, cryptonote::arg_data_dir);
+      // IPFSStartNode returns a JSON string as result
+      char* result_json = IPFSStartNode(const_cast<char*>(data_dir.c_str()));
+      rapidjson::Document json;
+      if (json.Parse(result_json).HasParseError())
+      {
+        m_znipfs_disabled = true;
+        MWARNING("Unable to parse ZeroNet/IPFS result, ZeroNet/IPFS disabled");
+      }
+      else
+      {
+        // Check the status of the ZeroNet/IPFS node after starting and display
+        // the message from the lib
+        const char *znipfs_status = json["Status"].GetString();
+        if (strcmp(znipfs_status, "ok") == 0)
+        {
+          // If all is ok, the message will contain the IPFS API port
+          MGINFO(json["Message"].GetString());
+        }
+        else
+        {
+          // If failed, it will print the reason and disable the lib
+          m_znipfs_disabled = true;
+          MWARNING("Unable to initialize ZeroNet and IFPS, " << json["Message"].GetString() << ". ZeroNet/IPFS disabled");
+        }
+      }
+
+    }
 
     m_fallback_seed_nodes_added = false;
     if (m_nettype == cryptonote::TESTNET)
@@ -645,6 +749,12 @@ namespace nodetool
     kill();
     m_peerlist.deinit();
     m_net_server.deinit_server();
+
+    // ZNIPFS: Shut down the IPFS node, if not disabled
+    if (!m_znipfs_disabled) {
+      IPFSStopNode();
+    }
+
     // remove UPnP port mapping
     if(!m_no_igd)
       delete_upnp_port_mapping(m_listening_port);
@@ -773,7 +883,7 @@ namespace nodetool
     }
     else
     {
-      try_get_support_flags(context_, [](p2p_connection_context& flags_context, const uint32_t& support_flags) 
+      try_get_support_flags(context_, [](p2p_connection_context& flags_context, const uint32_t& support_flags)
       {
         flags_context.support_flags = support_flags;
       });
@@ -1620,25 +1730,25 @@ namespace nodetool
     COMMAND_REQUEST_SUPPORT_FLAGS::request support_flags_request;
     bool r = epee::net_utils::async_invoke_remote_command2<typename COMMAND_REQUEST_SUPPORT_FLAGS::response>
     (
-      context.m_connection_id, 
-      COMMAND_REQUEST_SUPPORT_FLAGS::ID, 
-      support_flags_request, 
+      context.m_connection_id,
+      COMMAND_REQUEST_SUPPORT_FLAGS::ID,
+      support_flags_request,
       m_net_server.get_config_object(),
       [=](int code, const typename COMMAND_REQUEST_SUPPORT_FLAGS::response& rsp, p2p_connection_context& context_)
-      {  
+      {
         if(code < 0)
         {
           LOG_WARNING_CC(context_, "COMMAND_REQUEST_SUPPORT_FLAGS invoke failed. (" << code <<  ", " << epee::levin::get_err_descr(code) << ")");
           return;
         }
-        
+
         f(context_, rsp.support_flags);
       },
       P2P_DEFAULT_HANDSHAKE_INVOKE_TIMEOUT
     );
 
     return r;
-  }  
+  }
   //-----------------------------------------------------------------------------------
   template<class t_payload_net_handler>
   int node_server<t_payload_net_handler>::handle_timed_sync(int command, typename COMMAND_TIMED_SYNC::request& arg, typename COMMAND_TIMED_SYNC::response& rsp, p2p_connection_context& context)
@@ -1731,8 +1841,8 @@ namespace nodetool
         LOG_DEBUG_CC(context, "PING SUCCESS " << context.m_remote_address.host_str() << ":" << port_l);
       });
     }
-    
-    try_get_support_flags(context, [](p2p_connection_context& flags_context, const uint32_t& support_flags) 
+
+    try_get_support_flags(context, [](p2p_connection_context& flags_context, const uint32_t& support_flags)
     {
       flags_context.support_flags = support_flags;
     });
