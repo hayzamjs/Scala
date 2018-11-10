@@ -62,10 +62,6 @@
 
 namespace nodetool
 {
-  // ZNIPFS: I define the zeronet addresses here. `const char *` would be a better option here but it seems like
-  // you can't pass consts into Go
-  char* zeronet_address = (char*)"1KvWEyqhyHsU9y6UT8xYCFDC8Y1vKaNueX";
-  char* zeronet_testnet_address = (char*)"1CH9ApTd83RM8ggz35pZApnKoZqDf7wXyh";
 
   inline bool append_net_address(std::vector<epee::net_utils::network_address> & seed_nodes, std::string const & addr, uint16_t default_port);
   //-----------------------------------------------------------------------------------
@@ -407,7 +403,7 @@ namespace nodetool
 
       if (nettype == cryptonote::TESTNET)
       {
-        result_json = ZNIPFSGetSeedList(zeronet_testnet_address);
+        result_json = ZNIPFSGetSeedList((char*)"1CH9ApTd83RM8ggz35pZApnKoZqDf7wXyh");
       }
       else if (nettype == cryptonote::STAGENET)
       {
@@ -419,7 +415,7 @@ namespace nodetool
       }
       else
       {
-        result_json = ZNIPFSGetSeedList(zeronet_address);
+        result_json = ZNIPFSGetSeedList((char*)"1KvWEyqhyHsU9y6UT8xYCFDC8Y1vKaNueX");
       }
 
       // The seedlist is returned in JSON, containing any errors or the seedlist
