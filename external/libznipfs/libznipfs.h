@@ -75,6 +75,16 @@ extern char* ZNIPFSGetSeedList(char* p0);
 
 extern void IPFSStopNode();
 
+// ZNStartCheckpointCollection starts watching for new checkpoints
+
+extern void ZNStartCheckpointCollection(char* p0, char* p1);
+
+// GetCheckpoint returns the checkpoint for the requested height. We only keep
+// the last 10 checkpoints since start and return a blank if the checkpoint was
+// not found
+
+extern char* ZNGetCheckpointAt(int p0);
+
 #ifdef __cplusplus
 }
 #endif

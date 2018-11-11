@@ -420,6 +420,13 @@ namespace cryptonote
      void disable_dns_checkpoints(bool disable = true) { m_disable_dns_checkpoints = disable; }
 
      /**
+      * @brief set whether or not to enable or disable ZeroNet checkpoints
+      *
+      * @param disable whether to disable ZeroNet checkpoints
+      */
+     void disable_zn_checkpoints(bool disable = true) { m_disable_zn_checkpoints = disable; }
+
+     /**
       * @copydoc tx_memory_pool::have_tx
       *
       * @note see tx_memory_pool::have_tx
@@ -986,6 +993,7 @@ namespace cryptonote
 
      std::atomic_flag m_checkpoints_updating; //!< set if checkpoints are currently updating to avoid multiple threads attempting to update at once
      bool m_disable_dns_checkpoints;
+     bool m_disable_zn_checkpoints;
 
      size_t block_sync_size;
 

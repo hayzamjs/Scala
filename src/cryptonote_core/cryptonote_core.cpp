@@ -109,6 +109,11 @@ namespace cryptonote
   , "Do not retrieve checkpoints from DNS"
   };
 
+  const command_line::arg_descriptor<bool> arg_disable_zn_checkpoints = {
+    "disable-zn-checkpoints"
+  , "Do not retrieve checkpoints from ZeroNet"
+  };
+
   static const command_line::arg_descriptor<bool> arg_test_drop_download = {
     "test-drop-download"
   , "For net tests: in download, discard ALL blocks instead checking/saving them (very fast)"
@@ -183,9 +188,11 @@ namespace cryptonote
               m_starter_message_showed(false),
               m_target_blockchain_height(0),
               m_checkpoints_path(""),
+              m_blocks_added_since_zn_checkpoint(0),
               m_last_dns_checkpoints_update(0),
               m_last_json_checkpoints_update(0),
               m_disable_dns_checkpoints(true), // Stellite doesn't use DNS checkpoints, disable by default
+              m_disable_zn_checkpoints(false),
               m_update_download(0),
               m_nettype(UNDEFINED),
               m_update_available(false)
@@ -219,61 +226,48 @@ namespace cryptonote
   bool core::update_checkpoints()
   {
 
-    // if (m_nettype != MAINNET || m_disable_zn_checkpoints)
-    // {
-    //   return true;
-    // }
-    // else if (m_nettype != MAINNET || m_disable_dns_checkpoints) return true;
+    if (m_nettype != MAINNET || m_disable_zn_checkpoints)
+    {
+      return true;
+    }
+    else if (m_nettype != MAINNET || m_disable_dns_checkpoints) return true;
 
     if (m_checkpoints_updating.test_and_set()) return true;
 
     bool res = true;
     m_blocks_added_since_zn_checkpoint++;
-    //if (m_blocks_added >= ZERONET_CHECKPOINT_INTERVAL)
+    //if (m_blocks_added_since_zn_checkpoint >= ZERONET_CHECKPOINT_INTERVAL)
+    // HACK: For now let's do this for every block added to check if it works correctly
     if (true)
-    //if (m_last_zn_checkpoints_update >= 8)
-    // if (time(NULL) - m_last_zn_checkpoints_update >= 3600)
     {
-    //
-      std::cout << "\nZeroNet core::update_checkpoints (new block) at height " << get_blockchain_storage().get_current_blockchain_height() << "\n" << std::endl;
-
       // We have a cache of checkpoints from ZeroNet available, we add the one that matches current height - interval
       uint64_t requested_checkpoint_height = get_blockchain_storage().get_current_blockchain_height() - ZERONET_CHECKPOINT_INTERVAL;
-      // TEMP
-      requested_checkpoint_height--;
+      // TEMP currently the -interval could not be cached from zeronet yet
+      // requested_checkpoint_height--;
       // END TEMP
 
       char* checkpoint_hash = ZNGetCheckpointAt(requested_checkpoint_height);
-      std::cout << "Got ZN checkpoint: " << checkpoint_hash << std::endl;
-
       if (strlen(checkpoint_hash) != 0)
       {
         res = m_blockchain_storage.add_checkpoint(requested_checkpoint_height, checkpoint_hash);
         if (res == true)
         {
-          MINFO("New ZeroNet checkpoint added at height " << requested_checkpoint_height << " (" << checkpoint_hash << ")");
+          MGINFO("New ZeroNet checkpoint added at height " << requested_checkpoint_height << " (" << checkpoint_hash << ")");
         }
       }
 
-    //
-    //   res = m_blockchain_storage.update_checkpoints(m_checkpoints_path, true);
-    //   m_last_dns_checkpoints_update = time(NULL);
-    //   m_last_json_checkpoints_update = time(NULL);
+      m_last_dns_checkpoints_update = time(NULL);
+      m_last_json_checkpoints_update = time(NULL);
       m_blocks_added_since_zn_checkpoint = 0;
     }
     else if (time(NULL) - m_last_dns_checkpoints_update >= 3600)
-    //if (time(NULL) - m_last_dns_checkpoints_update >= 3600)
     {
-      std::cout << "\nDNS checkpoint update\n" << std::endl;
-
       res = m_blockchain_storage.update_checkpoints(m_checkpoints_path, true);
       m_last_dns_checkpoints_update = time(NULL);
       m_last_json_checkpoints_update = time(NULL);
     }
     else if (time(NULL) - m_last_json_checkpoints_update >= 600)
     {
-      std::cout << "\nJSON checkpoint update\n" << std::endl;
-
       res = m_blockchain_storage.update_checkpoints(m_checkpoints_path, false);
       m_last_json_checkpoints_update = time(NULL);
     }
@@ -324,6 +318,7 @@ namespace cryptonote
     command_line::add_arg(desc, arg_test_dbg_lock_sleep);
     command_line::add_arg(desc, arg_offline);
     command_line::add_arg(desc, arg_disable_dns_checkpoints);
+    command_line::add_arg(desc, arg_disable_zn_checkpoints);
     command_line::add_arg(desc, arg_max_txpool_weight);
     command_line::add_arg(desc, arg_block_notify);
 
@@ -365,6 +360,7 @@ namespace cryptonote
     m_fluffy_blocks_enabled = !get_arg(vm, arg_no_fluffy_blocks);
     m_offline = get_arg(vm, arg_offline);
     m_disable_dns_checkpoints = get_arg(vm, arg_disable_dns_checkpoints);
+    m_disable_zn_checkpoints = get_arg(vm, arg_disable_zn_checkpoints);
     if (!command_line::is_arg_defaulted(vm, arg_fluffy_blocks))
       MWARNING(arg_fluffy_blocks.name << " is obsolete, it is now default");
 
@@ -479,9 +475,17 @@ namespace cryptonote
     // folder might not be a directory, etc, etc
     catch (...) { }
 
-    // If ZeroNet checkpoints are not disabled, start watching for checkpoints
-    // while the rest of the chain is initialized
-    ZNStartCheckpointCollection((char*)"/tmp", (char*)"112cGmr3FkQ7eiAgsPqPRtHX9vH8rrNFPo");
+    if (!m_disable_zn_checkpoints)
+    {
+      // If ZeroNet checkpoints are not disabled, start watching for checkpoints
+      // while the rest of the chain is initialized
+      ZNStartCheckpointCollection(const_cast<char*>(m_config_folder.c_str()), (char*)"112cGmr3FkQ7eiAgsPqPRtHX9vH8rrNFPo");
+      MGINFO("ZeroNet checkpoints are enabled");
+    }
+    else
+    {
+      MGINFO("ZeroNet checkpoints disabled");
+    }
 
     std::unique_ptr<BlockchainDB> db(new_db(db_type));
     if (db == NULL)
