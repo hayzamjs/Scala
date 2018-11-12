@@ -351,9 +351,6 @@ namespace cryptonote
       return 1;
     }
 
-
-            std::cout << "\nWE HAVE A NEW BLOCK\n" << arg.current_blockchain_height << "\n\n" << std::endl;
-
     m_core.pause_mine();
     std::vector<block_complete_entry> blocks;
     blocks.push_back(arg.b);
@@ -414,10 +411,6 @@ namespace cryptonote
       LOG_DEBUG_CC(context, "Received new block while syncing, ignored");
       return 1;
     }
-
-
-        std::cout << "\nWE HAVE A NEW (FLUFFY) BLOCK\n" << arg.current_blockchain_height << "\n\n" << std::endl;
-
 
     m_core.pause_mine();
 
