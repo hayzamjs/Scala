@@ -1,39 +1,49 @@
 sudo: required
-dist: trusty
+before_install:
+  - sudo apt-get update && sudo apt-get install g++ python-dev autotools-dev libicu-dev build-essential libbz2-dev git-core build-essential cmake libpcsclite-dev libpgm-dev miniupnpc libunbound-dev graphviz pkg-config libexpat1-dev
+  - git clone https://github.com/zeromq/libzmq.git -b v4.2.5
+  - cd libzmq/
+  - sudo ./autogen.sh
+  - sudo ./configure --enable-static --disable-shared CPPFLAGS="-fPIC" LIBS="-lgcc"
+  - sudo make
+  - sudo make install
+  - sudo ldconfig
+  - cd /home/travis/build/stellitequestion/Stellite/
+  - git clone https://github.com/jedisct1/libsodium.git -b 1.0.16
+  - cd libsodium
+  - sudo ./autogen.sh
+  - sudo ./configure CFLAGS="-fPIC" CXXFLAGS="-fPIC"
+  - sudo make
+  - sudo make check
+  - sudo make install
+  - cd /home/travis/build/stellitequestion/Stellite/
+  - git clone https://github.com/zeromq/cppzmq.git -b v4.2.3
+  - cd cppzmq
+  - test `git rev-parse HEAD` = 6aa3ab686e916cb0e62df7fa7d12e0b13ae9fae6
+  - sudo cp -R *.hpp /usr/local/include
+  - sudo cp -R *.hpp /usr/local/lib
+  - sudo cp -R *.hpp /lib
+  - cd /home/travis/build/stellitequestion/Stellite/
+  - wget https://www.openssl.org/source/openssl-1.0.2o.tar.gz
+  - tar -xvzf openssl-1.0.2o.tar.gz
+  - cd openssl-1.0.2o
+  - ./Configure linux-x86_64 no-shared --static -fPIC
+  - sudo make install
+  - export OPENSSL_ROOT_DIR=$PATH:/usr/local/ssl/
+  - cd /home/travis/build/stellitequestion/Stellite/
+  - wget https://dl.bintray.com/boostorg/release/1.66.0/source/boost_1_66_0_rc2.tar.gz
+  - tar -xf boost_1_66_0_rc2.tar.gz
+  - cd boost_1_66_0
+  - ./bootstrap.sh --prefix=/usr/local
+  - sudo ./b2 --build-type=minimal link=static --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread --with-locale threading=multi threadapi=pthread cflags="-fPIC" cxxflags="-fPIC" stage install
+  - cd /home/travis/build/stellitequestion/Stellite/
+# Enable C++ support
 language: cpp
+
+# Compiler selection
 compiler:
-- gcc
-- clang
-addons:
-  apt:
-    packages:
-    - build-essential
-    - cmake
-    - doxygen
-    - g++
-    - gcc
-    - clang
-    - graphviz
-    - libboost1.55-all-dev
-    - libdb++-dev
-    - libdb-dev
-    - libgtest-dev
-    - libminiupnpc-dev
-    - libssl-dev
-    - libssl1.0.0
-    - libunbound-dev
-    - libunwind8-dev
-    #sources:
-    #- ubuntu-toolchain-r-test
-script: make -j2 && HAVE_DOT=YES doxygen Doxyfile
-notifications:
-  email: false
-  irc:
-    on_success: change
-    on_failure: change
-    channels:
-      - "chat.freenode.net#monero-dev"
-    nick: monero
-    template:
-      - "%{result} | %{repository}#%{build_number} (%{commit} : %{author}) | Build details : %{build_url}"
-      
+  - gcc
+
+# Build steps
+script:
+- make -j4 release-static

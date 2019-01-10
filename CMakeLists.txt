@@ -667,7 +667,7 @@ endif()
 
 list(APPEND EXTRA_LIBRARIES ${CMAKE_DL_LIBS})
 
-option(USE_READLINE "Build with GNU readline support." ON)
+option(USE_READLINE "Build with GNU readline support." OFF)
 if(USE_READLINE)
   find_package(Readline)
   if(READLINE_FOUND AND GNU_READLINE_FOUND)
