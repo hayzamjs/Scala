@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "int-util.h": "c",
+        "stdio.h": "c"
+    }
+}

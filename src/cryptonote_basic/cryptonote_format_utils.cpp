@@ -1026,10 +1026,13 @@ namespace cryptonote
     else if(b.major_version < 5){
         cn_variant = 2;
     }
-    else{
+    else if(b.major_version < 10){
 	cn_variant = 3;
     }
-    crypto::cn_slow_hash(bd.data(), bd.size(), res, cn_variant);
+    else{
+	cn_variant = 4;
+    }
+    crypto::cn_slow_hash(bd.data(), bd.size(), res, cn_variant, height);
     return true;
   }
   //---------------------------------------------------------------

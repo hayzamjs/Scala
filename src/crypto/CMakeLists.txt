@@ -34,6 +34,7 @@ set(crypto_sources
   crypto-ops.c
   crypto.cpp
   groestl.c
+  hash-extra-yescrypt.c
   hash-extra-blake.c
   hash-extra-groestl.c
   hash-extra-jh.c
@@ -45,6 +46,7 @@ set(crypto_sources
   random.c
   skein.c
   slow-hash.c
+  CryptonightR_JIT.c
   tree-hash.c)
 
 set(crypto_headers)
@@ -65,6 +67,15 @@ set(crypto_private_headers
   oaes_config.h
   oaes_lib.h
   random.h
+  sha256.h
+  CryptonightR_JIT.h
+  CryptonightR_template.h
+  sysendian.h
+  yescrypt-best_c.h
+  yescrypt-opt_c.h
+  yescrypt-platform_c.h
+  yescrypt-simd_c.h
+  yescrypt.h
   skein.h
   skein_port.h)
 
