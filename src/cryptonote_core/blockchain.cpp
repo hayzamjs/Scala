@@ -91,10 +91,10 @@ static const struct {
   time_t time;
 } mainnet_hard_forks[] = {
   { 1, 1, 0, 1341378000 },
-  { 2, 10, 0, 1520584977 },
-  { 3, 15, 0, 1522557835 },
-  { 4, 20, 0, 1522557836 },
-  { 9, V9_TMFORK_HEIGHT, 0, 1539719641 },
+  { 2, 67500, 0, 1520584977 },
+  { 3, 100800, 0, 1522557835 },
+  { 4, 194600, 0, 1522557836 },
+  { 9, 503001, 0, 1544959005 },
 };
 static const uint64_t mainnet_hard_fork_version_1_till = (uint64_t)-1;
 
@@ -762,6 +762,7 @@ bool Blockchain::get_block_by_hash(const crypto::hash &h, block &blk, bool *orph
 // last DIFFICULTY_BLOCKS_COUNT blocks and passes them to next_difficulty,
 // returning the result of that call.  Ignores the genesis block, and can use
 // less blocks than desired if there aren't enough.
+
 difficulty_type Blockchain::get_difficulty_for_next_block()
 {
 
@@ -806,7 +807,7 @@ difficulty_type Blockchain::get_difficulty_for_next_block()
   }
   else
   {
-    size_t offset = height - std::min < size_t > (height, static_cast<size_t>(difficult_block_count));
+    uint64_t offset = height - std::min < uint64_t > (height, static_cast<uint64_t>(difficult_block_count));
     if (offset == 0)
       ++offset;
 
@@ -822,6 +823,7 @@ difficulty_type Blockchain::get_difficulty_for_next_block()
     m_timestamps = timestamps;
     m_difficulties = difficulties;
   }
+
   size_t target = get_difficulty_target();
 
   if(get_current_hard_fork_version() < 2){
@@ -830,9 +832,13 @@ difficulty_type Blockchain::get_difficulty_for_next_block()
   if(get_current_hard_fork_version() < 4){
     return next_difficulty_v3(timestamps, difficulties, target, true);
   }
-  else{
-      return next_difficulty_v4(timestamps, difficulties, target);
+  if(get_current_hard_fork_version() < 5){
+    return next_difficulty_v4(timestamps, difficulties, target);
   }
+  else{
+    return next_difficulty_v5(timestamps, difficulties, target);
+  }
+
 }
 //------------------------------------------------------------------
 // This function removes blocks from the blockchain until it gets to the
@@ -951,7 +957,7 @@ bool Blockchain::switch_to_alternative_blockchain(std::list<blocks_ext_by_hash::
     for (auto& old_ch_ent : disconnected_chain)
     {
       block_verification_context bvc = boost::value_initialized<block_verification_context>();
-      LOG_PRINT_L0("disconnected, c est la vie");
+      //LOG_PRINT_L0("disconnected, c est la vie");
       bool r = handle_alternative_block(old_ch_ent, get_block_hash(old_ch_ent), bvc);
       if(!r)
       {
@@ -1055,8 +1061,11 @@ difficulty_type Blockchain::get_next_difficulty_for_alternative_chain(const std:
   if(get_current_hard_fork_version() < 4){
     return next_difficulty_v3(timestamps, cumulative_difficulties, target, true);
   }
-  else{
+  if(get_current_hard_fork_version() < 5){
     return next_difficulty_v4(timestamps, cumulative_difficulties, target);
+  }
+  else{
+    return next_difficulty_v5(timestamps, cumulative_difficulties, target);
   }
 }
 //------------------------------------------------------------------
@@ -1199,19 +1208,6 @@ bool Blockchain::create_block_template(block& b, const account_public_address& m
   CRITICAL_REGION_BEGIN(m_blockchain_lock);
   height = m_db->height();
   if (m_btc_valid) {
-    // The pool cookie is atomic. The lack of locking is OK, as if it changes
-    // just as we compare it, we'll just use a slightly old template, but
-    // this would be the case anyway if we'd lock, and the change happened
-    // just after the block template was created
-    if (!memcmp(&miner_address, &m_btc_address, sizeof(cryptonote::account_public_address)) && m_btc_nonce == ex_nonce && m_btc_pool_cookie == m_tx_pool.cookie()) {
-      MDEBUG("Using cached template");
-      m_btc.timestamp = time(NULL); // update timestamp unconditionally
-      b = m_btc;
-      diffic = m_btc_difficulty;
-      expected_reward = m_btc_expected_reward;
-      return true;
-    }
-    MDEBUG("Not using cached template: address " << (!memcmp(&miner_address, &m_btc_address, sizeof(cryptonote::account_public_address))) << ", nonce " << (m_btc_nonce == ex_nonce) << ", cookie " << (m_btc_pool_cookie == m_tx_pool.cookie()));
     invalidate_block_template_cache();
   }
 
@@ -3621,7 +3617,7 @@ bool Blockchain::add_new_block(const block& bl_, block_verification_context& bvc
   if(!(bl.prev_id == get_tail_id()))
   {
     //chain switching or wrong block
-    LOG_PRINT_L0("block previous id  = " << bl.prev_id << " is not ok with db previous id  ");
+    //LOG_PRINT_L0("block previous id  = " << bl.prev_id << " is not ok with db previous id  ");
     bvc.m_added_to_main_chain = false;
     m_db->block_txn_stop();
     bool r = handle_alternative_block(bl, id, bvc);
@@ -4442,7 +4438,7 @@ void Blockchain::cancel()
 }
 
 #if defined(PER_BLOCK_CHECKPOINT)
-static const char expected_block_hashes_hash[] = "";
+static const char expected_block_hashes_hash[] = "1fe0a7db7dfd489e0a80e678bf7b400cfb94784d0e1b91adcb0df0078d10cc2e";
 void Blockchain::load_compiled_in_block_hashes()
 {
   const bool testnet = m_nettype == TESTNET;
