@@ -757,7 +757,6 @@ int main(int argc, char* argv[])
   try
   {
 
-  core.disable_dns_checkpoints(true);
   core.disable_zn_checkpoints(true);
   if (!core.init(vm, NULL))
   {

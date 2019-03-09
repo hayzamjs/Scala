@@ -121,7 +121,7 @@ static const struct {
 //------------------------------------------------------------------
 Blockchain::Blockchain(tx_memory_pool& tx_pool) :
   m_db(), m_tx_pool(tx_pool), m_hardfork(NULL), m_timestamps_and_difficulties_height(0), m_current_block_cumul_weight_limit(0), m_current_block_cumul_weight_median(0),
-  m_enforce_dns_checkpoints(false), m_max_prepare_blocks_threads(4), m_db_sync_on_blocks(true), m_db_sync_threshold(1), m_db_sync_mode(db_async), m_db_default_sync(false), m_fast_sync(true), m_show_time_stats(false), m_sync_counter(0), m_bytes_to_sync(0), m_cancel(false),
+  m_enforce_zn_checkpoints(false), m_max_prepare_blocks_threads(4), m_db_sync_on_blocks(true), m_db_sync_threshold(1), m_db_sync_mode(db_async), m_db_default_sync(false), m_fast_sync(true), m_show_time_stats(false), m_sync_counter(0), m_bytes_to_sync(0), m_cancel(false),
   m_difficulty_for_next_block_top_hash(crypto::null_hash),
   m_difficulty_for_next_block(1),
   m_btc_valid(false)
@@ -3684,7 +3684,7 @@ bool Blockchain::add_checkpoint(uint64_t height, const std::string& hash_str) {
 // returns false if any of the checkpoints loading returns false.
 // That should happen only if a checkpoint is added that conflicts
 // with an existing checkpoint.
-bool Blockchain::update_checkpoints(const std::string& file_path, bool check_dns)
+bool Blockchain::update_checkpoints(const std::string& file_path, bool check_zn)
 {
 
   if (!m_checkpoints.load_checkpoints_from_json(file_path))
@@ -3692,22 +3692,26 @@ bool Blockchain::update_checkpoints(const std::string& file_path, bool check_dns
       return false;
   }
 
-  // if we're checking both dns and json, load checkpoints from dns.
-  // if we're not hard-enforcing dns checkpoints, handle accordingly
-  if (m_enforce_dns_checkpoints && check_dns && !m_offline)
+  // if we're checking both zn and json, load checkpoints from zn.
+  // if we're not hard-enforcing zn checkpoints, handle accordingly
+  if (m_enforce_zn_checkpoints && check_zn)
   {
-    if (!m_checkpoints.load_checkpoints_from_dns())
+    // We have a cache of checkpoints from ZeroNet available, we add the one that matches current height - interval
+    // TEMP currently the -interval could not be cached from zeronet yet
+    // requested_checkpoint_height--;
+    // END TEMP
+    if (!m_checkpoints.load_checkpoints_from_zn(get_current_blockchain_height() - ZERONET_CHECKPOINT_INTERVAL))
     {
       return false;
     }
   }
-  else if (check_dns && !m_offline)
+  else if (check_zn)
   {
-    checkpoints dns_points;
-    dns_points.load_checkpoints_from_dns();
-    if (m_checkpoints.check_for_conflicts(dns_points))
+    checkpoints zn_points;
+    zn_points.load_checkpoints_from_zn(get_current_blockchain_height() - ZERONET_CHECKPOINT_INTERVAL);
+    if (m_checkpoints.check_for_conflicts(zn_points))
     {
-      check_against_checkpoints(dns_points, false);
+      check_against_checkpoints(zn_points, false);
     }
     else
     {
@@ -3722,7 +3726,7 @@ bool Blockchain::update_checkpoints(const std::string& file_path, bool check_dns
 //------------------------------------------------------------------
 void Blockchain::set_enforce_dns_checkpoints(bool enforce_checkpoints)
 {
-  m_enforce_dns_checkpoints = enforce_checkpoints;
+  m_enforce_zn_checkpoints = enforce_checkpoints;
 }
 
 //------------------------------------------------------------------

@@ -104,10 +104,6 @@ namespace cryptonote
     "offline"
   , "Do not listen for peers, nor connect to any"
   };
-  const command_line::arg_descriptor<bool> arg_disable_dns_checkpoints = {
-    "disable-dns-checkpoints"
-  , "Do not retrieve checkpoints from DNS"
-  };
 
   const command_line::arg_descriptor<bool> arg_disable_zn_checkpoints = {
     "disable-zn-checkpoints"
@@ -191,7 +187,6 @@ namespace cryptonote
               m_blocks_added_since_zn_checkpoint(0),
               m_last_dns_checkpoints_update(0),
               m_last_json_checkpoints_update(0),
-              m_disable_dns_checkpoints(true), // Stellite doesn't use DNS checkpoints, disable by default
               m_disable_zn_checkpoints(false),
               m_update_download(0),
               m_nettype(UNDEFINED),
@@ -225,51 +220,30 @@ namespace cryptonote
   //-----------------------------------------------------------------------------------------------
   bool core::update_checkpoints()
   {
-
     if (m_nettype != MAINNET || m_disable_zn_checkpoints)
     {
       return true;
     }
-    else if (m_nettype != MAINNET || m_disable_dns_checkpoints) return true;
 
     if (m_checkpoints_updating.test_and_set()) return true;
 
+    time_t t = 0;
     bool res = true;
     m_blocks_added_since_zn_checkpoint++;
     //if (m_blocks_added_since_zn_checkpoint >= ZERONET_CHECKPOINT_INTERVAL)
     // HACK: For now let's do this for every block added to check if it works correctly
     if (true)
     {
-      // We have a cache of checkpoints from ZeroNet available, we add the one that matches current height - interval
-      uint64_t requested_checkpoint_height = get_blockchain_storage().get_current_blockchain_height() - ZERONET_CHECKPOINT_INTERVAL;
-      // TEMP currently the -interval could not be cached from zeronet yet
-      // requested_checkpoint_height--;
-      // END TEMP
-
-      char* checkpoint_hash = ZNGetCheckpointAt(requested_checkpoint_height);
-      if (strlen(checkpoint_hash) != 0)
-      {
-        res = m_blockchain_storage.add_checkpoint(requested_checkpoint_height, checkpoint_hash);
-        if (res == true)
-        {
-          MGINFO("New ZeroNet checkpoint added at height " << requested_checkpoint_height << " (" << checkpoint_hash << ")");
-        }
-      }
-
-      m_last_dns_checkpoints_update = time(NULL);
-      m_last_json_checkpoints_update = time(NULL);
+      res = m_blockchain_storage.update_checkpoints(m_checkpoints_path, true);
+      t = time(nullptr);
+      m_last_dns_checkpoints_update = t;
+      m_last_json_checkpoints_update = t;
       m_blocks_added_since_zn_checkpoint = 0;
     }
-    else if (time(NULL) - m_last_dns_checkpoints_update >= 3600)
-    {
-      res = m_blockchain_storage.update_checkpoints(m_checkpoints_path, true);
-      m_last_dns_checkpoints_update = time(NULL);
-      m_last_json_checkpoints_update = time(NULL);
-    }
-    else if (time(NULL) - m_last_json_checkpoints_update >= 600)
+    else if (time(nullptr) - m_last_json_checkpoints_update >= 600)
     {
       res = m_blockchain_storage.update_checkpoints(m_checkpoints_path, false);
-      m_last_json_checkpoints_update = time(NULL);
+      m_last_json_checkpoints_update = time(nullptr);
     }
 
     m_checkpoints_updating.clear();
@@ -317,7 +291,6 @@ namespace cryptonote
     command_line::add_arg(desc, arg_no_fluffy_blocks);
     command_line::add_arg(desc, arg_test_dbg_lock_sleep);
     command_line::add_arg(desc, arg_offline);
-    command_line::add_arg(desc, arg_disable_dns_checkpoints);
     command_line::add_arg(desc, arg_disable_zn_checkpoints);
     command_line::add_arg(desc, arg_max_txpool_weight);
     command_line::add_arg(desc, arg_block_notify);
@@ -359,7 +332,6 @@ namespace cryptonote
     test_drop_download_height(command_line::get_arg(vm, arg_test_drop_download_height));
     m_fluffy_blocks_enabled = !get_arg(vm, arg_no_fluffy_blocks);
     m_offline = get_arg(vm, arg_offline);
-    m_disable_dns_checkpoints = get_arg(vm, arg_disable_dns_checkpoints);
     m_disable_zn_checkpoints = get_arg(vm, arg_disable_zn_checkpoints);
     if (!command_line::is_arg_defaulted(vm, arg_fluffy_blocks))
       MWARNING(arg_fluffy_blocks.name << " is obsolete, it is now default");
@@ -1299,9 +1271,6 @@ if (!results[i].res)
   //-----------------------------------------------------------------------------------------------
   bool core::handle_block_found(block& b)
   {
-    // HACK
-    update_checkpoints();
-    // END HACK
     block_verification_context bvc = boost::value_initialized<block_verification_context>();
     m_miner.pause();
     std::vector<block_complete_entry> blocks;
@@ -1323,7 +1292,7 @@ if (!results[i].res)
 
 
     CHECK_AND_ASSERT_MES(!bvc.m_verifivation_failed, false, "mined block failed verification");
-    if(bvc.m_added_to_main_chain)
+    if (bvc.m_added_to_main_chain)
     {
       cryptonote_connection_context exclude_context = boost::value_initialized<cryptonote_connection_context>();
       NOTIFY_NEW_BLOCK::request arg = AUTO_VAL_INIT(arg);
@@ -1331,21 +1300,24 @@ if (!results[i].res)
       std::vector<crypto::hash> missed_txs;
       std::vector<cryptonote::blobdata> txs;
       m_blockchain_storage.get_transactions_blobs(b.tx_hashes, txs, missed_txs);
-      if(missed_txs.size() &&  m_blockchain_storage.get_block_id_by_height(get_block_height(b)) != get_block_hash(b))
+      if (!missed_txs.empty() &&  m_blockchain_storage.get_block_id_by_height(get_block_height(b)) != get_block_hash(b))
       {
         LOG_PRINT_L1("Block found but, seems that reorganize just happened after that, do not relay this block");
         return true;
       }
-      CHECK_AND_ASSERT_MES(txs.size() == b.tx_hashes.size() && !missed_txs.size(), false, "can't find some transactions in found block:" << get_block_hash(b) << " txs.size()=" << txs.size()
+      CHECK_AND_ASSERT_MES(txs.size() == b.tx_hashes.size() && missed_txs.empty(), false, "can't find some transactions in found block:" << get_block_hash(b) << " txs.size()=" << txs.size()
         << ", b.tx_hashes.size()=" << b.tx_hashes.size() << ", missed_txs.size()" << missed_txs.size());
 
       block_to_blob(b, arg.b.block);
       //pack transactions
-      for(auto& tx:  txs)
+      for (auto& tx:  txs)
         arg.b.txs.push_back(tx);
 
       m_pprotocol->relay_block(arg, exclude_context);
     }
+    // HACK
+    update_checkpoints();
+    // END HACK
     return bvc.m_added_to_main_chain;
   }
   //-----------------------------------------------------------------------------------------------

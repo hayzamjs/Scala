@@ -28,6 +28,7 @@
 //
 // Parts of this file are originally copyright (c) 2012-2013 The Cryptonote developers
 
+#include <libznipfs/libznipfs.h>
 #include "include_base_utils.h"
 
 using namespace epee;
@@ -208,72 +209,15 @@ namespace cryptonote
     return true;
   }
 
-  bool checkpoints::load_checkpoints_from_dns(network_type nettype)
+  bool checkpoints::load_checkpoints_from_zn(uint64_t height, network_type nettype)
   {
-    std::vector<std::string> records;
-
-    // All four StellitePulse domains have DNSSEC on and valid
-    static const std::vector<std::string> dns_urls = { "checkpoints.stellitepulse.se"
-						     , "checkpoints.stellitepulse.org"
-						     , "checkpoints.stellitepulse.net"
-						     , "checkpoints.stellitepulse.co"
-    };
-
-    static const std::vector<std::string> testnet_dns_urls = { "testpoints.stellitepulse.se"
-							     , "testpoints.stellitepulse.org"
-							     , "testpoints.stellitepulse.net"
-							     , "testpoints.stellitepulse.co"
-    };
-
-    static const std::vector<std::string> stagenet_dns_urls = { "stagenetpoints.stellitepulse.se"
-                   , "stagenetpoints.stellitepulse.org"
-                   , "stagenetpoints.stellitepulse.net"
-                   , "stagenetpoints.stellitepulse.co"
-    };
-
-    if (!tools::dns_utils::load_txt_records_from_dns(records, nettype == TESTNET ? testnet_dns_urls : nettype == STAGENET ? stagenet_dns_urls : dns_urls))
-      return true; // why true ?
-
-    for (const auto& record : records)
-    {
-      auto pos = record.find(":");
-      if (pos != std::string::npos)
+      // TODO request_checkpoint_height should be uint64_t in the lib
+      char* checkpoint_hash = ZNGetCheckpointAt(height);
+      if (strlen(checkpoint_hash) != 0)
       {
-        uint64_t height;
-        crypto::hash hash;
-
-        // parse the first part as uint64_t,
-        // if this fails move on to the next record
-        std::stringstream ss(record.substr(0, pos));
-        if (!(ss >> height))
-        {
-    continue;
-        }
-
-        // parse the second part as crypto::hash,
-        // if this fails move on to the next record
-        std::string hashStr = record.substr(pos + 1);
-        if (!epee::string_tools::parse_tpod_from_hex_string(hashStr, hash))
-        {
-    continue;
-        }
-
-        ADD_CHECKPOINT(height, hashStr);
+        LOG_PRINT_L1("New ZeroNet checkpoint added at height " << height << " (" << checkpoint_hash << ")");
+        ADD_CHECKPOINT(height, checkpoint_hash);
       }
-    }
-    return true;
-  }
-
-  bool checkpoints::load_new_checkpoints(const std::string &json_hashfile_fullpath, network_type nettype, bool dns)
-  {
-    bool result;
-
-    result = load_checkpoints_from_json(json_hashfile_fullpath);
-    if (dns)
-    {
-      result &= load_checkpoints_from_dns(nettype);
-    }
-
-    return result;
+      return true;
   }
 }

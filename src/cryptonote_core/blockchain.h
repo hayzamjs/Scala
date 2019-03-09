@@ -1035,7 +1035,7 @@ namespace cryptonote
 
 
     checkpoints m_checkpoints;
-    bool m_enforce_dns_checkpoints;
+    bool m_enforce_zn_checkpoints;
 
     HardFork *m_hardfork;
 
