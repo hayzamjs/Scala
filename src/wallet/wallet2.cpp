@@ -3408,6 +3408,13 @@ bool wallet2::load_keys(const std::string& keys_file_name, const epee::wipeable_
       THROW_WALLET_EXCEPTION(error::wallet_internal_error, "invalid password");
       return false;
   }
+  
+  m_ask_password = false;
+  m_always_confirm_transfers = false;
+  m_confirm_subaddress = false;
+  m_confirm_backlog = false;
+  m_confirm_export_overwrite = false;
+  m_confirm_non_default_ring_size = true;
 
   r = epee::serialization::load_t_from_binary(m_account, account_data);
   THROW_WALLET_EXCEPTION_IF(!r, error::invalid_password);
