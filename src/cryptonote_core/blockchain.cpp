@@ -769,6 +769,10 @@ difficulty_type Blockchain::get_difficulty_for_next_block()
   std::vector<uint64_t> timestamps;
   std::vector<difficulty_type> difficulties;
   auto height = m_db->height();
+	
+   if (m_nettype == MAINNET && (uint64_t) height > 0 && (uint64_t) height < 100) {
+    return (difficulty_type) 10;
+  }
 
   size_t difficult_block_count;
 
