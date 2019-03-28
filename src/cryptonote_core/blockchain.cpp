@@ -91,10 +91,7 @@ static const struct {
   time_t time;
 } mainnet_hard_forks[] = {
   { 1, 1, 0, 1341378000 },
-  { 2, 67500, 0, 1520584977 },
-  { 3, 100800, 0, 1522557835 },
-  { 4, 194600, 0, 1522557836 },
-  { 9, 503001, 0, 1544959005 },
+  { 5, 3, 0, 1544959005 },
 };
 static const uint64_t mainnet_hard_fork_version_1_till = (uint64_t)-1;
 
@@ -772,6 +769,10 @@ difficulty_type Blockchain::get_difficulty_for_next_block()
   std::vector<uint64_t> timestamps;
   std::vector<difficulty_type> difficulties;
   auto height = m_db->height();
+
+  if (m_nettype == MAINNET && (uint64_t) height > 0 && (uint64_t) height < 10000000) {
+    return (difficulty_type) 10;
+  }
 
   size_t difficult_block_count;
 
