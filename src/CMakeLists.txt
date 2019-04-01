@@ -67,7 +67,6 @@ function (torque_add_executable name)
   source_group("${name}"
     FILES
       ${ARGN})
-
   add_executable("${name}"
     ${ARGN})
   target_link_libraries("${name}"

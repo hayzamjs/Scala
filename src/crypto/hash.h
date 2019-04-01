@@ -30,6 +30,7 @@
 
 #pragma once
 
+#include "argon2.h"
 #include <stddef.h>
 #include <iostream>
 #include <boost/utility/value_init.hpp>
@@ -38,6 +39,13 @@
 #include "generic-ops.h"
 #include "hex.h"
 #include "span.h"
+
+// Chukwa Definitions
+#define CHUKWA_HASHLEN 32 // The length of the resulting hash in bytes
+#define CHUKWA_SALTLEN 16 // The length of our salt in bytes
+#define CHUKWA_THREADS 1 // How many threads to use at once
+#define CHUKWA_ITERS   1 // How many iterations we perform as part of our slow-hash
+#define CHUKWA_MEMORY  896 // This value is in KiB (0.85MB)
 
 namespace crypto {
 
@@ -77,6 +85,12 @@ namespace crypto {
 
   inline void cn_slow_hash_prehashed(const void *data, std::size_t length, hash &hash, int variant = 0) {
     cn_slow_hash(data, length, reinterpret_cast<char *>(&hash), variant, 1/*prehashed*/);
+  }
+
+  inline void chukwa_slow_hash(const void *data, std::size_t length, hash &hash) {
+    uint8_t salt[CHUKWA_SALTLEN];
+    memcpy(salt, hash.data, sizeof(salt));
+    argon2id_hash_raw(CHUKWA_ITERS, CHUKWA_MEMORY, CHUKWA_THREADS, data, length, salt, CHUKWA_SALTLEN, hash.data, CHUKWA_HASHLEN);
   }
 
   inline void tree_hash(const hash *hashes, std::size_t count, hash &root_hash) {
