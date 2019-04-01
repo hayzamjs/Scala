@@ -71,6 +71,7 @@ function (torque_add_executable name)
     ${ARGN})
   target_link_libraries("${name}"
     PRIVATE
+      ${CMAKE_BINARY_DIR}/src/crypto/libargon2.a
       ${EXTRA_LIBRARIES})
   set_property(TARGET "${name}"
     PROPERTY
