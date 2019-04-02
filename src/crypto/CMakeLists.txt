@@ -77,6 +77,7 @@ torque_add_library(cncrypto
 target_link_libraries(cncrypto
   PUBLIC
     epee
+    argon2-static
     ${Boost_SYSTEM_LIBRARY}
     ${SODIUM_LIBRARY}
   PRIVATE

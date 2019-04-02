@@ -749,3 +749,754 @@ int main(int argc, char** argv)
 #endif
 }
 
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_097af/fast 
+/usr/bin/make -f CMakeFiles/cmTC_097af.dir/build.make CMakeFiles/cmTC_097af.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_097af.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -fPIC    -o CMakeFiles/cmTC_097af.dir/CheckSymbolExists.c.o   -c /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_097af
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_097af.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC     -rdynamic CMakeFiles/cmTC_097af.dir/CheckSymbolExists.c.o  -o cmTC_097af 
+CMakeFiles/cmTC_097af.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x1b): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_097af.dir/build.make:86: recipe for target 'cmTC_097af' failed
+make[1]: *** [cmTC_097af] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_097af/fast' failed
+make: *** [cmTC_097af/fast] Error 2
+
+File /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_ada4c/fast 
+/usr/bin/make -f CMakeFiles/cmTC_ada4c.dir/build.make CMakeFiles/cmTC_ada4c.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_ada4c.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -fPIC -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_ada4c.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.14/Modules/CheckFunctionExists.c
+Linking C executable cmTC_ada4c
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ada4c.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_ada4c.dir/CheckFunctionExists.c.o  -o cmTC_ada4c -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_ada4c.dir/build.make:86: recipe for target 'cmTC_ada4c' failed
+make[1]: *** [cmTC_ada4c] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_ada4c/fast' failed
+make: *** [cmTC_ada4c/fast] Error 2
+
+
+Determining if the include file event.h exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_3c4d5/fast 
+/usr/bin/make -f CMakeFiles/cmTC_3c4d5.dir/build.make CMakeFiles/cmTC_3c4d5.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_3c4d5.dir/CheckIncludeFile.c.o
+/usr/bin/cc   -fPIC    -o CMakeFiles/cmTC_3c4d5.dir/CheckIncludeFile.c.o   -c /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+/src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckIncludeFile.c:1:19: fatal error: event.h: No such file or directory
+compilation terminated.
+CMakeFiles/cmTC_3c4d5.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_3c4d5.dir/CheckIncludeFile.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_3c4d5.dir/CheckIncludeFile.c.o] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_3c4d5/fast' failed
+make: *** [cmTC_3c4d5/fast] Error 2
+
+
+Determining if the include file iphlpapi.h exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_5186e/fast 
+/usr/bin/make -f CMakeFiles/cmTC_5186e.dir/build.make CMakeFiles/cmTC_5186e.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_5186e.dir/CheckIncludeFile.c.o
+/usr/bin/cc   -fPIC    -o CMakeFiles/cmTC_5186e.dir/CheckIncludeFile.c.o   -c /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+/src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckIncludeFile.c:1:22: fatal error: iphlpapi.h: No such file or directory
+compilation terminated.
+CMakeFiles/cmTC_5186e.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_5186e.dir/CheckIncludeFile.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_5186e.dir/CheckIncludeFile.c.o] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_5186e/fast' failed
+make: *** [cmTC_5186e/fast] Error 2
+
+
+Determining if the include file login_cap.h exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_c99fe/fast 
+/usr/bin/make -f CMakeFiles/cmTC_c99fe.dir/build.make CMakeFiles/cmTC_c99fe.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_c99fe.dir/CheckIncludeFile.c.o
+/usr/bin/cc   -fPIC    -o CMakeFiles/cmTC_c99fe.dir/CheckIncludeFile.c.o   -c /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+/src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckIncludeFile.c:1:23: fatal error: login_cap.h: No such file or directory
+compilation terminated.
+CMakeFiles/cmTC_c99fe.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_c99fe.dir/CheckIncludeFile.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_c99fe.dir/CheckIncludeFile.c.o] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_c99fe/fast' failed
+make: *** [cmTC_c99fe/fast] Error 2
+
+
+Determining if the include file sys/sha2.h exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_d8e79/fast 
+/usr/bin/make -f CMakeFiles/cmTC_d8e79.dir/build.make CMakeFiles/cmTC_d8e79.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_d8e79.dir/CheckIncludeFile.c.o
+/usr/bin/cc   -fPIC    -o CMakeFiles/cmTC_d8e79.dir/CheckIncludeFile.c.o   -c /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+/src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckIncludeFile.c:1:22: fatal error: sys/sha2.h: No such file or directory
+compilation terminated.
+CMakeFiles/cmTC_d8e79.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_d8e79.dir/CheckIncludeFile.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_d8e79.dir/CheckIncludeFile.c.o] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_d8e79/fast' failed
+make: *** [cmTC_d8e79/fast] Error 2
+
+
+Determining if the include file vfork.h exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_3e8cf/fast 
+/usr/bin/make -f CMakeFiles/cmTC_3e8cf.dir/build.make CMakeFiles/cmTC_3e8cf.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_3e8cf.dir/CheckIncludeFile.c.o
+/usr/bin/cc   -fPIC    -o CMakeFiles/cmTC_3e8cf.dir/CheckIncludeFile.c.o   -c /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+/src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckIncludeFile.c:1:19: fatal error: vfork.h: No such file or directory
+compilation terminated.
+CMakeFiles/cmTC_3e8cf.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_3e8cf.dir/CheckIncludeFile.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_3e8cf.dir/CheckIncludeFile.c.o] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_3e8cf/fast' failed
+make: *** [cmTC_3e8cf/fast] Error 2
+
+
+Determining if the include file windows.h exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_e1b80/fast 
+/usr/bin/make -f CMakeFiles/cmTC_e1b80.dir/build.make CMakeFiles/cmTC_e1b80.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_e1b80.dir/CheckIncludeFile.c.o
+/usr/bin/cc   -fPIC    -o CMakeFiles/cmTC_e1b80.dir/CheckIncludeFile.c.o   -c /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+/src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckIncludeFile.c:1:21: fatal error: windows.h: No such file or directory
+compilation terminated.
+CMakeFiles/cmTC_e1b80.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_e1b80.dir/CheckIncludeFile.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_e1b80.dir/CheckIncludeFile.c.o] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_e1b80/fast' failed
+make: *** [cmTC_e1b80/fast] Error 2
+
+
+Determining if the include file winsock2.h exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_a93ee/fast 
+/usr/bin/make -f CMakeFiles/cmTC_a93ee.dir/build.make CMakeFiles/cmTC_a93ee.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_a93ee.dir/CheckIncludeFile.c.o
+/usr/bin/cc   -fPIC    -o CMakeFiles/cmTC_a93ee.dir/CheckIncludeFile.c.o   -c /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+/src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckIncludeFile.c:1:22: fatal error: winsock2.h: No such file or directory
+compilation terminated.
+CMakeFiles/cmTC_a93ee.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_a93ee.dir/CheckIncludeFile.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_a93ee.dir/CheckIncludeFile.c.o] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_a93ee/fast' failed
+make: *** [cmTC_a93ee/fast] Error 2
+
+
+Determining if the include file ws2tcpip.h exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_df6ef/fast 
+/usr/bin/make -f CMakeFiles/cmTC_df6ef.dir/build.make CMakeFiles/cmTC_df6ef.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_df6ef.dir/CheckIncludeFile.c.o
+/usr/bin/cc   -fPIC    -o CMakeFiles/cmTC_df6ef.dir/CheckIncludeFile.c.o   -c /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+/src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckIncludeFile.c:1:22: fatal error: ws2tcpip.h: No such file or directory
+compilation terminated.
+CMakeFiles/cmTC_df6ef.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_df6ef.dir/CheckIncludeFile.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_df6ef.dir/CheckIncludeFile.c.o] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_df6ef/fast' failed
+make: *** [cmTC_df6ef/fast] Error 2
+
+
+Determining if the function _beginthreadex exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_296a8/fast 
+/usr/bin/make -f CMakeFiles/cmTC_296a8.dir/build.make CMakeFiles/cmTC_296a8.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_296a8.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -fPIC -DCHECK_FUNCTION_EXISTS=_beginthreadex   -o CMakeFiles/cmTC_296a8.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.14/Modules/CheckFunctionExists.c
+Linking C executable cmTC_296a8
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_296a8.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -DCHECK_FUNCTION_EXISTS=_beginthreadex    -rdynamic CMakeFiles/cmTC_296a8.dir/CheckFunctionExists.c.o  -o cmTC_296a8 
+CMakeFiles/cmTC_296a8.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x10): undefined reference to `_beginthreadex'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_296a8.dir/build.make:86: recipe for target 'cmTC_296a8' failed
+make[1]: *** [cmTC_296a8] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_296a8/fast' failed
+make: *** [cmTC_296a8/fast] Error 2
+
+
+Determining if the function arc4random exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_71135/fast 
+/usr/bin/make -f CMakeFiles/cmTC_71135.dir/build.make CMakeFiles/cmTC_71135.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_71135.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -fPIC -DCHECK_FUNCTION_EXISTS=arc4random   -o CMakeFiles/cmTC_71135.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.14/Modules/CheckFunctionExists.c
+Linking C executable cmTC_71135
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_71135.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -DCHECK_FUNCTION_EXISTS=arc4random    -rdynamic CMakeFiles/cmTC_71135.dir/CheckFunctionExists.c.o  -o cmTC_71135 
+CMakeFiles/cmTC_71135.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x10): undefined reference to `arc4random'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_71135.dir/build.make:86: recipe for target 'cmTC_71135' failed
+make[1]: *** [cmTC_71135] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_71135/fast' failed
+make: *** [cmTC_71135/fast] Error 2
+
+
+Determining if the function arc4random_uniform exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_3988d/fast 
+/usr/bin/make -f CMakeFiles/cmTC_3988d.dir/build.make CMakeFiles/cmTC_3988d.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_3988d.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -fPIC -DCHECK_FUNCTION_EXISTS=arc4random_uniform   -o CMakeFiles/cmTC_3988d.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.14/Modules/CheckFunctionExists.c
+Linking C executable cmTC_3988d
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3988d.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -DCHECK_FUNCTION_EXISTS=arc4random_uniform    -rdynamic CMakeFiles/cmTC_3988d.dir/CheckFunctionExists.c.o  -o cmTC_3988d 
+CMakeFiles/cmTC_3988d.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x10): undefined reference to `arc4random_uniform'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_3988d.dir/build.make:86: recipe for target 'cmTC_3988d' failed
+make[1]: *** [cmTC_3988d] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_3988d/fast' failed
+make: *** [cmTC_3988d/fast] Error 2
+
+
+Determining if the function getentropy exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_92556/fast 
+/usr/bin/make -f CMakeFiles/cmTC_92556.dir/build.make CMakeFiles/cmTC_92556.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_92556.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -fPIC -DCHECK_FUNCTION_EXISTS=getentropy   -o CMakeFiles/cmTC_92556.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.14/Modules/CheckFunctionExists.c
+Linking C executable cmTC_92556
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_92556.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -DCHECK_FUNCTION_EXISTS=getentropy    -rdynamic CMakeFiles/cmTC_92556.dir/CheckFunctionExists.c.o  -o cmTC_92556 
+CMakeFiles/cmTC_92556.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x10): undefined reference to `getentropy'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_92556.dir/build.make:86: recipe for target 'cmTC_92556' failed
+make[1]: *** [cmTC_92556] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_92556/fast' failed
+make: *** [cmTC_92556/fast] Error 2
+
+
+Determining if the function ioctlsocket exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_6d6a3/fast 
+/usr/bin/make -f CMakeFiles/cmTC_6d6a3.dir/build.make CMakeFiles/cmTC_6d6a3.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_6d6a3.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -fPIC -DCHECK_FUNCTION_EXISTS=ioctlsocket   -o CMakeFiles/cmTC_6d6a3.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.14/Modules/CheckFunctionExists.c
+Linking C executable cmTC_6d6a3
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6d6a3.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -DCHECK_FUNCTION_EXISTS=ioctlsocket    -rdynamic CMakeFiles/cmTC_6d6a3.dir/CheckFunctionExists.c.o  -o cmTC_6d6a3 
+CMakeFiles/cmTC_6d6a3.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x10): undefined reference to `ioctlsocket'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_6d6a3.dir/build.make:86: recipe for target 'cmTC_6d6a3' failed
+make[1]: *** [cmTC_6d6a3] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_6d6a3/fast' failed
+make: *** [cmTC_6d6a3/fast] Error 2
+
+
+Determining if the function reallocarray exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_fbc81/fast 
+/usr/bin/make -f CMakeFiles/cmTC_fbc81.dir/build.make CMakeFiles/cmTC_fbc81.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_fbc81.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -fPIC -DCHECK_FUNCTION_EXISTS=reallocarray   -o CMakeFiles/cmTC_fbc81.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.14/Modules/CheckFunctionExists.c
+Linking C executable cmTC_fbc81
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fbc81.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -DCHECK_FUNCTION_EXISTS=reallocarray    -rdynamic CMakeFiles/cmTC_fbc81.dir/CheckFunctionExists.c.o  -o cmTC_fbc81 
+CMakeFiles/cmTC_fbc81.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x10): undefined reference to `reallocarray'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_fbc81.dir/build.make:86: recipe for target 'cmTC_fbc81' failed
+make[1]: *** [cmTC_fbc81] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_fbc81/fast' failed
+make: *** [cmTC_fbc81/fast] Error 2
+
+
+Determining if the function setusercontent exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_f35c4/fast 
+/usr/bin/make -f CMakeFiles/cmTC_f35c4.dir/build.make CMakeFiles/cmTC_f35c4.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_f35c4.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -fPIC -DCHECK_FUNCTION_EXISTS=setusercontent   -o CMakeFiles/cmTC_f35c4.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.14/Modules/CheckFunctionExists.c
+Linking C executable cmTC_f35c4
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f35c4.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -DCHECK_FUNCTION_EXISTS=setusercontent    -rdynamic CMakeFiles/cmTC_f35c4.dir/CheckFunctionExists.c.o  -o cmTC_f35c4 
+CMakeFiles/cmTC_f35c4.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x10): undefined reference to `setusercontent'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_f35c4.dir/build.make:86: recipe for target 'cmTC_f35c4' failed
+make[1]: *** [cmTC_f35c4] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_f35c4/fast' failed
+make: *** [cmTC_f35c4/fast] Error 2
+
+
+Determining if the function strlcat exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_ec0b9/fast 
+/usr/bin/make -f CMakeFiles/cmTC_ec0b9.dir/build.make CMakeFiles/cmTC_ec0b9.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_ec0b9.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -fPIC -DCHECK_FUNCTION_EXISTS=strlcat   -o CMakeFiles/cmTC_ec0b9.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.14/Modules/CheckFunctionExists.c
+Linking C executable cmTC_ec0b9
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ec0b9.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -DCHECK_FUNCTION_EXISTS=strlcat    -rdynamic CMakeFiles/cmTC_ec0b9.dir/CheckFunctionExists.c.o  -o cmTC_ec0b9 
+CMakeFiles/cmTC_ec0b9.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x10): undefined reference to `strlcat'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_ec0b9.dir/build.make:86: recipe for target 'cmTC_ec0b9' failed
+make[1]: *** [cmTC_ec0b9] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_ec0b9/fast' failed
+make: *** [cmTC_ec0b9/fast] Error 2
+
+
+Determining if the function strlcpy exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_c7601/fast 
+/usr/bin/make -f CMakeFiles/cmTC_c7601.dir/build.make CMakeFiles/cmTC_c7601.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_c7601.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -fPIC -DCHECK_FUNCTION_EXISTS=strlcpy   -o CMakeFiles/cmTC_c7601.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.14/Modules/CheckFunctionExists.c
+Linking C executable cmTC_c7601
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c7601.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -DCHECK_FUNCTION_EXISTS=strlcpy    -rdynamic CMakeFiles/cmTC_c7601.dir/CheckFunctionExists.c.o  -o cmTC_c7601 
+CMakeFiles/cmTC_c7601.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x10): undefined reference to `strlcpy'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_c7601.dir/build.make:86: recipe for target 'cmTC_c7601' failed
+make[1]: *** [cmTC_c7601] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_c7601/fast' failed
+make: *** [cmTC_c7601/fast] Error 2
+
+
+Determining if the PTHREAD_PRIO_INHERIT exist failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_a969e/fast 
+/usr/bin/make -f CMakeFiles/cmTC_a969e.dir/build.make CMakeFiles/cmTC_a969e.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_a969e.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -fPIC    -o CMakeFiles/cmTC_a969e.dir/CheckSymbolExists.c.o   -c /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c: In function 'main':
+/src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:18: error: lvalue required as unary '&' operand
+   return ((int*)(&PTHREAD_PRIO_INHERIT))[argc];
+                  ^
+CMakeFiles/cmTC_a969e.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_a969e.dir/CheckSymbolExists.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_a969e.dir/CheckSymbolExists.c.o] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_a969e/fast' failed
+make: *** [cmTC_a969e/fast] Error 2
+
+File /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef PTHREAD_PRIO_INHERIT
+  return ((int*)(&PTHREAD_PRIO_INHERIT))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the pthread_rwlock_t exist failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_801e7/fast 
+/usr/bin/make -f CMakeFiles/cmTC_801e7.dir/build.make CMakeFiles/cmTC_801e7.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_801e7.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -fPIC    -o CMakeFiles/cmTC_801e7.dir/CheckSymbolExists.c.o   -c /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c: In function 'main':
+/src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: expected expression before 'pthread_rwlock_t'
+   return ((int*)(&pthread_rwlock_t))[argc];
+                   ^
+CMakeFiles/cmTC_801e7.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_801e7.dir/CheckSymbolExists.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_801e7.dir/CheckSymbolExists.c.o] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_801e7/fast' failed
+make: *** [cmTC_801e7/fast] Error 2
+
+File /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_rwlock_t
+  return ((int*)(&pthread_rwlock_t))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the pthread_spinlock_t exist failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_3c386/fast 
+/usr/bin/make -f CMakeFiles/cmTC_3c386.dir/build.make CMakeFiles/cmTC_3c386.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_3c386.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -fPIC    -o CMakeFiles/cmTC_3c386.dir/CheckSymbolExists.c.o   -c /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c: In function 'main':
+/src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: expected expression before 'pthread_spinlock_t'
+   return ((int*)(&pthread_spinlock_t))[argc];
+                   ^
+CMakeFiles/cmTC_3c386.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_3c386.dir/CheckSymbolExists.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_3c386.dir/CheckSymbolExists.c.o] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_3c386/fast' failed
+make: *** [cmTC_3c386/fast] Error 2
+
+File /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_spinlock_t
+  return ((int*)(&pthread_spinlock_t))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the sk_SSL_COMP_pop_free exist failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_6f4b4/fast 
+/usr/bin/make -f CMakeFiles/cmTC_6f4b4.dir/build.make CMakeFiles/cmTC_6f4b4.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_6f4b4.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -fPIC    -o CMakeFiles/cmTC_6f4b4.dir/CheckSymbolExists.c.o   -c /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_6f4b4
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6f4b4.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC     -rdynamic CMakeFiles/cmTC_6f4b4.dir/CheckSymbolExists.c.o  -o cmTC_6f4b4 
+CMakeFiles/cmTC_6f4b4.dir/CheckSymbolExists.c.o: In function `sk_SSL_COMP_pop_free':
+CheckSymbolExists.c:(.text+0x1f): undefined reference to `OPENSSL_sk_pop_free'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_6f4b4.dir/build.make:86: recipe for target 'cmTC_6f4b4' failed
+make[1]: *** [cmTC_6f4b4] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_6f4b4/fast' failed
+make: *** [cmTC_6f4b4/fast] Error 2
+
+File /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <openssl/ssl.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef sk_SSL_COMP_pop_free
+  return ((int*)(&sk_SSL_COMP_pop_free))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the SSL_COMP_get_compression_methods exist failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_3f2a9/fast 
+/usr/bin/make -f CMakeFiles/cmTC_3f2a9.dir/build.make CMakeFiles/cmTC_3f2a9.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_3f2a9.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -fPIC    -o CMakeFiles/cmTC_3f2a9.dir/CheckSymbolExists.c.o   -c /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_3f2a9
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3f2a9.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC     -rdynamic CMakeFiles/cmTC_3f2a9.dir/CheckSymbolExists.c.o  -o cmTC_3f2a9 
+CMakeFiles/cmTC_3f2a9.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x1b): undefined reference to `SSL_COMP_get_compression_methods'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_3f2a9.dir/build.make:86: recipe for target 'cmTC_3f2a9' failed
+make[1]: *** [cmTC_3f2a9] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_3f2a9/fast' failed
+make: *** [cmTC_3f2a9/fast] Error 2
+
+File /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <openssl/ssl.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef SSL_COMP_get_compression_methods
+  return ((int*)(&SSL_COMP_get_compression_methods))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function EVP_MD_CTX_new exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_ca32f/fast 
+/usr/bin/make -f CMakeFiles/cmTC_ca32f.dir/build.make CMakeFiles/cmTC_ca32f.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_ca32f.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -fPIC -DCHECK_FUNCTION_EXISTS=EVP_MD_CTX_new   -o CMakeFiles/cmTC_ca32f.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.14/Modules/CheckFunctionExists.c
+Linking C executable cmTC_ca32f
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ca32f.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -DCHECK_FUNCTION_EXISTS=EVP_MD_CTX_new    -rdynamic CMakeFiles/cmTC_ca32f.dir/CheckFunctionExists.c.o  -o cmTC_ca32f 
+CMakeFiles/cmTC_ca32f.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x10): undefined reference to `EVP_MD_CTX_new'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_ca32f.dir/build.make:86: recipe for target 'cmTC_ca32f' failed
+make[1]: *** [cmTC_ca32f] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_ca32f/fast' failed
+make: *** [cmTC_ca32f/fast] Error 2
+
+
+Determining if the function EVP_sha1 exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_b6938/fast 
+/usr/bin/make -f CMakeFiles/cmTC_b6938.dir/build.make CMakeFiles/cmTC_b6938.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_b6938.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -fPIC -DCHECK_FUNCTION_EXISTS=EVP_sha1   -o CMakeFiles/cmTC_b6938.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.14/Modules/CheckFunctionExists.c
+Linking C executable cmTC_b6938
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b6938.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -DCHECK_FUNCTION_EXISTS=EVP_sha1    -rdynamic CMakeFiles/cmTC_b6938.dir/CheckFunctionExists.c.o  -o cmTC_b6938 
+CMakeFiles/cmTC_b6938.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x10): undefined reference to `EVP_sha1'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_b6938.dir/build.make:86: recipe for target 'cmTC_b6938' failed
+make[1]: *** [cmTC_b6938] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_b6938/fast' failed
+make: *** [cmTC_b6938/fast] Error 2
+
+
+Determining if the function EVP_sha256 exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_d193a/fast 
+/usr/bin/make -f CMakeFiles/cmTC_d193a.dir/build.make CMakeFiles/cmTC_d193a.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_d193a.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -fPIC -DCHECK_FUNCTION_EXISTS=EVP_sha256   -o CMakeFiles/cmTC_d193a.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.14/Modules/CheckFunctionExists.c
+Linking C executable cmTC_d193a
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d193a.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -DCHECK_FUNCTION_EXISTS=EVP_sha256    -rdynamic CMakeFiles/cmTC_d193a.dir/CheckFunctionExists.c.o  -o cmTC_d193a 
+CMakeFiles/cmTC_d193a.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x10): undefined reference to `EVP_sha256'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_d193a.dir/build.make:86: recipe for target 'cmTC_d193a' failed
+make[1]: *** [cmTC_d193a] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_d193a/fast' failed
+make: *** [cmTC_d193a/fast] Error 2
+
+
+Determining if the function EVP_sha512 exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_a80e8/fast 
+/usr/bin/make -f CMakeFiles/cmTC_a80e8.dir/build.make CMakeFiles/cmTC_a80e8.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_a80e8.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -fPIC -DCHECK_FUNCTION_EXISTS=EVP_sha512   -o CMakeFiles/cmTC_a80e8.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.14/Modules/CheckFunctionExists.c
+Linking C executable cmTC_a80e8
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a80e8.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -DCHECK_FUNCTION_EXISTS=EVP_sha512    -rdynamic CMakeFiles/cmTC_a80e8.dir/CheckFunctionExists.c.o  -o cmTC_a80e8 
+CMakeFiles/cmTC_a80e8.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x10): undefined reference to `EVP_sha512'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_a80e8.dir/build.make:86: recipe for target 'cmTC_a80e8' failed
+make[1]: *** [cmTC_a80e8] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_a80e8/fast' failed
+make: *** [cmTC_a80e8/fast] Error 2
+
+
+Determining if the function FIPS_mode exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_d7e6a/fast 
+/usr/bin/make -f CMakeFiles/cmTC_d7e6a.dir/build.make CMakeFiles/cmTC_d7e6a.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_d7e6a.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -fPIC -DCHECK_FUNCTION_EXISTS=FIPS_mode   -o CMakeFiles/cmTC_d7e6a.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.14/Modules/CheckFunctionExists.c
+Linking C executable cmTC_d7e6a
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d7e6a.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -DCHECK_FUNCTION_EXISTS=FIPS_mode    -rdynamic CMakeFiles/cmTC_d7e6a.dir/CheckFunctionExists.c.o  -o cmTC_d7e6a 
+CMakeFiles/cmTC_d7e6a.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x10): undefined reference to `FIPS_mode'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_d7e6a.dir/build.make:86: recipe for target 'cmTC_d7e6a' failed
+make[1]: *** [cmTC_d7e6a] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_d7e6a/fast' failed
+make: *** [cmTC_d7e6a/fast] Error 2
+
+
+Determining if the function HMAC_Update exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_208c8/fast 
+/usr/bin/make -f CMakeFiles/cmTC_208c8.dir/build.make CMakeFiles/cmTC_208c8.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_208c8.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -fPIC -DCHECK_FUNCTION_EXISTS=HMAC_Update   -o CMakeFiles/cmTC_208c8.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.14/Modules/CheckFunctionExists.c
+Linking C executable cmTC_208c8
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_208c8.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -DCHECK_FUNCTION_EXISTS=HMAC_Update    -rdynamic CMakeFiles/cmTC_208c8.dir/CheckFunctionExists.c.o  -o cmTC_208c8 
+CMakeFiles/cmTC_208c8.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x10): undefined reference to `HMAC_Update'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_208c8.dir/build.make:86: recipe for target 'cmTC_208c8' failed
+make[1]: *** [cmTC_208c8] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_208c8/fast' failed
+make: *** [cmTC_208c8/fast] Error 2
+
+
+Determining if the function OPENSSL_config exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_973a8/fast 
+/usr/bin/make -f CMakeFiles/cmTC_973a8.dir/build.make CMakeFiles/cmTC_973a8.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_973a8.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -fPIC -DCHECK_FUNCTION_EXISTS=OPENSSL_config   -o CMakeFiles/cmTC_973a8.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.14/Modules/CheckFunctionExists.c
+Linking C executable cmTC_973a8
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_973a8.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -DCHECK_FUNCTION_EXISTS=OPENSSL_config    -rdynamic CMakeFiles/cmTC_973a8.dir/CheckFunctionExists.c.o  -o cmTC_973a8 
+CMakeFiles/cmTC_973a8.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x10): undefined reference to `OPENSSL_config'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_973a8.dir/build.make:86: recipe for target 'cmTC_973a8' failed
+make[1]: *** [cmTC_973a8] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_973a8/fast' failed
+make: *** [cmTC_973a8/fast] Error 2
+
+
+Determining if the function SHA512_Update exists failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_62d4e/fast 
+/usr/bin/make -f CMakeFiles/cmTC_62d4e.dir/build.make CMakeFiles/cmTC_62d4e.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_62d4e.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -fPIC -DCHECK_FUNCTION_EXISTS=SHA512_Update   -o CMakeFiles/cmTC_62d4e.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.14/Modules/CheckFunctionExists.c
+Linking C executable cmTC_62d4e
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_62d4e.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -DCHECK_FUNCTION_EXISTS=SHA512_Update    -rdynamic CMakeFiles/cmTC_62d4e.dir/CheckFunctionExists.c.o  -o cmTC_62d4e 
+CMakeFiles/cmTC_62d4e.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x10): undefined reference to `SHA512_Update'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_62d4e.dir/build.make:86: recipe for target 'cmTC_62d4e' failed
+make[1]: *** [cmTC_62d4e] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_62d4e/fast' failed
+make: *** [cmTC_62d4e/fast] Error 2
+
+
+Determining if the LIBRESSL_VERSION_TEXT exist failed with the following output:
+Change Dir: /src/Torque/external/unbound/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_25e68/fast 
+/usr/bin/make -f CMakeFiles/cmTC_25e68.dir/build.make CMakeFiles/cmTC_25e68.dir/build
+make[1]: Entering directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_25e68.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -fPIC    -o CMakeFiles/cmTC_25e68.dir/CheckSymbolExists.c.o   -c /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c: In function 'main':
+/src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: 'LIBRESSL_VERSION_TEXT' undeclared (first use in this function)
+   return ((int*)(&LIBRESSL_VERSION_TEXT))[argc];
+                   ^
+/src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: note: each undeclared identifier is reported only once for each function it appears in
+CMakeFiles/cmTC_25e68.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_25e68.dir/CheckSymbolExists.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_25e68.dir/CheckSymbolExists.c.o] Error 1
+make[1]: Leaving directory '/src/Torque/external/unbound/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_25e68/fast' failed
+make: *** [cmTC_25e68/fast] Error 2
+
+File /src/Torque/external/unbound/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <openssl/opensslv.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef LIBRESSL_VERSION_TEXT
+  return ((int*)(&LIBRESSL_VERSION_TEXT))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+

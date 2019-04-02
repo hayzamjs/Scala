@@ -1,4 +1,4 @@
-# Install script for directory: /root/PoW/external/unbound
+# Install script for directory: /src/Torque/external/unbound
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/root/PoW/external/unbound/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/src/Torque/external/unbound/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
