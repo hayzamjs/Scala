@@ -1016,6 +1016,7 @@ namespace cryptonote
   bool get_block_longhash(const block& b, crypto::hash& res, uint64_t height)
   {
     blobdata bd = get_block_hashing_blob(b);
+/*
     int cn_variant;
     if(b.major_version <= 2){
 	cn_variant = 0;
@@ -1026,10 +1027,13 @@ namespace cryptonote
     else if(b.major_version < 5){
         cn_variant = 2;
     }
+    //else if(b.major_version < 10){
     else{
 	cn_variant = 3;
     }
     crypto::cn_slow_hash(bd.data(), bd.size(), res, cn_variant);
+*/
+    crypto::chukwa_slow_hash(bd.data(), bd.size(), res); /* We need to use this for Argon */
     return true;
   }
   //---------------------------------------------------------------
