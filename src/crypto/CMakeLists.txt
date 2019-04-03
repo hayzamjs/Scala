@@ -45,7 +45,12 @@ set(crypto_sources
   random.c
   skein.c
   slow-hash.c
-  tree-hash.c)
+  tree-hash.c
+  yespower.c
+  yespower-platform.c
+  yespower-opt.c
+  sha256.c
+  tests.c)
 
 set(crypto_headers)
 
@@ -66,7 +71,11 @@ set(crypto_private_headers
   oaes_lib.h
   random.h
   skein.h
-  skein_port.h)
+  skein_port.h
+  yespower.h
+  sha256.h
+  sysendian.h
+  insecure_memzero.h)
 
 torque_private_headers(cncrypto
   ${crypto_private_headers})
