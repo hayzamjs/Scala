@@ -41,6 +41,8 @@ using namespace epee;
 #include "crypto/crypto.h"
 #include "crypto/hash.h"
 #include "ringct/rctSigs.h"
+#include <typeinfo>
+#include <iostream>
 
 #undef MONERO_DEFAULT_LOG_CATEGORY
 #define MONERO_DEFAULT_LOG_CATEGORY "cn"
@@ -50,6 +52,7 @@ using namespace epee;
 // #define ENABLE_HASH_CASH_INTEGRITY_CHECK
 
 using namespace crypto;
+using namespace std;
 
 static const uint64_t valid_decomposed_outputs[] = {
   (uint64_t)1, (uint64_t)2, (uint64_t)3, (uint64_t)4, (uint64_t)5, (uint64_t)6, (uint64_t)7, (uint64_t)8, (uint64_t)9, // 1 piconero
@@ -1016,24 +1019,26 @@ namespace cryptonote
   bool get_block_longhash(const block& b, crypto::hash& res, uint64_t height)
   {
     blobdata bd = get_block_hashing_blob(b);
-/*
+
     int cn_variant;
     if(b.major_version <= 2){
-	cn_variant = 0;
+	      cn_variant = 0;
     }
     else if(b.major_version == 3){
-	cn_variant = 1;
+	      cn_variant = 1;
     }
     else if(b.major_version < 5){
         cn_variant = 2;
     }
-    //else if(b.major_version < 10){
-    else{
-	cn_variant = 3;
+    else if(b.major_version < 10){
+	      cn_variant = 3;
     }
+    else{
+    crypto::yespower_hasher(bd.data(), bd.size(), res); /* We need to use this for YesPower */
+    }
+
     crypto::cn_slow_hash(bd.data(), bd.size(), res, cn_variant);
-*/
-    crypto::chukwa_slow_hash(bd.data(), bd.size(), res); /* We need to use this for Argon */
+    //crypto::chukwa_slow_hash(bd.data(), bd.size(), res); /* We need to use this for Argon */
     return true;
   }
   //---------------------------------------------------------------

@@ -31,6 +31,7 @@
 #pragma once
 
 #include "argon2.h"
+#include "yespower.h"
 #include <stddef.h>
 #include <iostream>
 #include <boost/utility/value_init.hpp>
@@ -40,12 +41,14 @@
 #include "hex.h"
 #include "span.h"
 
+static const yespower_params_t v2 = {YESPOWER_1_0, 4096, 4, NULL, 0};
+
 // Chukwa Definitions
 #define CHUKWA_HASHLEN 32 // The length of the resulting hash in bytes
 #define CHUKWA_SALTLEN 16 // The length of our salt in bytes
 #define CHUKWA_THREADS 1 // How many threads to use at once
 #define CHUKWA_ITERS   1 // How many iterations we perform as part of our slow-hash
-#define CHUKWA_MEMORY  896 // This value is in KiB (0.85MB)
+#define CHUKWA_MEMORY  31250 // This value is in KiB 
 
 namespace crypto {
 
@@ -93,6 +96,15 @@ namespace crypto {
     argon2id_hash_raw(CHUKWA_ITERS, CHUKWA_MEMORY, CHUKWA_THREADS, data, length, salt, CHUKWA_SALTLEN, hash.data, CHUKWA_HASHLEN);
   }
 
+  inline void yespower_hasher(const void *data, std::size_t length, hash &hash) {
+  
+  unsigned char fillArray[68];
+  for(int i = 0; i < 68; i++){
+    fillArray[i] = hash.data[i];
+  }
+  
+  yespower_tls((const uint8_t*) data, length, &v2, (yespower_binary_t *)fillArray);
+  }
   inline void tree_hash(const hash *hashes, std::size_t count, hash &root_hash) {
     tree_hash(reinterpret_cast<const char (*)[HASH_SIZE]>(hashes), count, reinterpret_cast<char *>(&root_hash));
   }

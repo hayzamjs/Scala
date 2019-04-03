@@ -22,6 +22,7 @@
 #include <sys/mman.h>
 #endif
 
+#include <errno.h>
 #include "yespower.h"
 
 #define HUGEPAGE_THRESHOLD		(12 * 1024 * 1024)
