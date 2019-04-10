@@ -1020,7 +1020,7 @@ namespace cryptonote
   {
     blobdata bd = get_block_hashing_blob(b);
 
-    int cn_variant;
+    int cn_variant = 4;
     if(b.major_version <= 2){
 	      cn_variant = 0;
     }
@@ -1034,10 +1034,11 @@ namespace cryptonote
 	      cn_variant = 3;
     }
     else{
-    crypto::yespower_hasher(bd.data(), bd.size(), res); /* We need to use this for YesPower */
+      crypto::yespower_hasher(bd.data(), bd.size(), res); /* We need to use this for YesPower */
     }
-
-    crypto::cn_slow_hash(bd.data(), bd.size(), res, cn_variant);
+    if(cn_variant < 4) {
+      crypto::cn_slow_hash(bd.data(), bd.size(), res, cn_variant);
+    }
     //crypto::chukwa_slow_hash(bd.data(), bd.size(), res); /* We need to use this for Argon */
     return true;
   }
