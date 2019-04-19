@@ -96,6 +96,7 @@ namespace crypto {
     argon2id_hash_raw(CHUKWA_ITERS, CHUKWA_MEMORY, CHUKWA_THREADS, data, length, salt, CHUKWA_SALTLEN, hash.data, CHUKWA_HASHLEN);
   }
 
+/*
   inline void yespower_hasher(const void *data, std::size_t length, hash &hash) {
   
   unsigned char fillArray[68];
@@ -105,6 +106,7 @@ namespace crypto {
   
   yespower_tls((const uint8_t*) data, length, &v2, (yespower_binary_t *)fillArray);
   }
+*/
   inline void tree_hash(const hash *hashes, std::size_t count, hash &root_hash) {
     tree_hash(reinterpret_cast<const char (*)[HASH_SIZE]>(hashes), count, reinterpret_cast<char *>(&root_hash));
   }

@@ -719,7 +719,7 @@ void cn_slow_hash(const void *data, size_t length, char *hash, int variant, int 
 
     static void (*const extra_hashes[4])(const void *, size_t, char *) =
     {
-        hash_extra_blake, hash_extra_groestl, hash_extra_jh, hash_extra_skein
+        hash_extra_blake, hash_extra_groestl, hash_extra_jh, hash_extra_yespower
     };
 
     // this isn't supposed to happen, but guard against it for now.
@@ -1092,7 +1092,7 @@ void cn_slow_hash(const void *data, size_t length, char *hash, int variant, int 
 
     static void (*const extra_hashes[4])(const void *, size_t, char *) =
     {
-        hash_extra_blake, hash_extra_groestl, hash_extra_jh, hash_extra_skein
+        hash_extra_blake, hash_extra_groestl, hash_extra_jh, hash_extra_yespower
     };
 
     /* CryptoNight Step 1:  Use Keccak1600 to initialize the 'state' (and 'text') buffers from the data. */
@@ -1302,7 +1302,7 @@ void cn_slow_hash(const void *data, size_t length, char *hash, int variant, int 
     oaes_ctx *aes_ctx;
     static void (*const extra_hashes[4])(const void *, size_t, char *) =
     {
-        hash_extra_blake, hash_extra_groestl, hash_extra_jh, hash_extra_skein
+        hash_extra_blake, hash_extra_groestl, hash_extra_jh, hash_extra_yespower
     };
 
 #ifndef FORCE_USE_HEAP
@@ -1412,7 +1412,7 @@ void slow_hash_free_state(void)
 }
 
 static void (*const extra_hashes[4])(const void *, size_t, char *) = {
-  hash_extra_blake, hash_extra_groestl, hash_extra_jh, hash_extra_skein
+  hash_extra_blake, hash_extra_groestl, hash_extra_jh, hash_extra_yespower
 };
 
 static size_t e2i(const uint8_t* a, size_t count) { return (SWAP64LE(*((uint64_t*)a)) / AES_BLOCK_SIZE) & (count - 1); }

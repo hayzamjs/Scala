@@ -1026,7 +1026,7 @@ static void smix(uint8_t *B, size_t r, uint32_t N,
 int yespower(yespower_local_t *local,
     const uint8_t *src, size_t srclen,
     const yespower_params_t *params,
-    yespower_binary_t *dst)
+    uint8_t *dst)
 {
 	yespower_version_t version = params->version;
 	uint32_t N = params->N;
@@ -1120,7 +1120,7 @@ int yespower(yespower_local_t *local,
  * Return 0 on success; or -1 on error.
  */
 int yespower_tls(const uint8_t *src, size_t srclen,
-    const yespower_params_t *params, yespower_binary_t *dst)
+    const yespower_params_t *params, uint8_t *dst)
 {
 	static __thread int initialized = 0;
 	static __thread yespower_local_t local;

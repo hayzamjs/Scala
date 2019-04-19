@@ -1019,7 +1019,7 @@ namespace cryptonote
   bool get_block_longhash(const block& b, crypto::hash& res, uint64_t height)
   {
     blobdata bd = get_block_hashing_blob(b);
-    crypto::yespower_hasher(bd.data(), bd.size(), res); /* We need to use this for YesPower */
+    crypto::cn_slow_hash(bd.data(), bd.size(), res, 3);
     return true;
   }
   //---------------------------------------------------------------

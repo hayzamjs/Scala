@@ -70,7 +70,7 @@ typedef struct {
  * A 256-bit yespower hash.
  */
 typedef struct {
-	unsigned char uc[32];
+	uint8_t uc[32];
 } yespower_binary_t;
 
 /**
@@ -109,7 +109,7 @@ extern int yespower_free_local(yespower_local_t *local);
  */
 extern int yespower(yespower_local_t *local,
     const uint8_t *src, size_t srclen,
-    const yespower_params_t *params, yespower_binary_t *dst);
+    const yespower_params_t *params, uint8_t *dst);
 
 /**
  * yespower_tls(src, srclen, params, dst):
@@ -121,7 +121,7 @@ extern int yespower(yespower_local_t *local,
  * MT-safe as long as dst is local to the thread.
  */
 extern int yespower_tls(const uint8_t *src, size_t srclen,
-    const yespower_params_t *params, yespower_binary_t *dst);
+    const yespower_params_t *params, uint8_t *dst);
 
 #ifdef __cplusplus
 }

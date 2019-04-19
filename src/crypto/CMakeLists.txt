@@ -38,6 +38,7 @@ set(crypto_sources
   hash-extra-groestl.c
   hash-extra-jh.c
   hash-extra-skein.c
+  hash-extra-yespower.c
   hash.c
   jh.c
   keccak.c
@@ -49,8 +50,7 @@ set(crypto_sources
   yespower.c
   yespower-platform.c
   yespower-opt.c
-  sha256.c
-  tests.c)
+  sha256.c)
 
 set(crypto_headers)
 
