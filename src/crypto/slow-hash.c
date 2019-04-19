@@ -717,9 +717,9 @@ void cn_slow_hash(const void *data, size_t length, char *hash, int variant, int 
     oaes_ctx *aes_ctx = NULL;
     int useAes = !force_software_aes() && check_aes_hw();
 
-    static void (*const extra_hashes[4])(const void *, size_t, char *) =
+    static void (*const extra_hashes[1])(const void *, size_t, char *) =
     {
-        hash_extra_blake, hash_extra_groestl, hash_extra_jh, hash_extra_skein
+        hash_extra_yescrypt
     };
 
     // this isn't supposed to happen, but guard against it for now.
@@ -833,7 +833,7 @@ void cn_slow_hash(const void *data, size_t length, char *hash, int variant, int 
 
     memcpy(state.init, text, INIT_SIZE_BYTE);
     hash_permutation(&state.hs);
-    extra_hashes[state.hs.b[0] & 3](&state, 200, hash);
+    extra_hashes[state.hs.b[0] & 0](&state, 200, hash);
 }
 
 #elif !defined NO_AES && (defined(__arm__) || defined(__aarch64__))
@@ -1090,9 +1090,9 @@ void cn_slow_hash(const void *data, size_t length, char *hash, int variant, int 
     size_t i, j;
     uint64_t *p = NULL;
 
-    static void (*const extra_hashes[4])(const void *, size_t, char *) =
+    static void (*const extra_hashes[1])(const void *, size_t, char *) =
     {
-        hash_extra_blake, hash_extra_groestl, hash_extra_jh, hash_extra_skein
+        hash_extra_yescrypt
     };
 
     /* CryptoNight Step 1:  Use Keccak1600 to initialize the 'state' (and 'text') buffers from the data. */
@@ -1162,7 +1162,7 @@ void cn_slow_hash(const void *data, size_t length, char *hash, int variant, int 
 
     memcpy(state.init, text, INIT_SIZE_BYTE);
     hash_permutation(&state.hs);
-    extra_hashes[state.hs.b[0] & 3](&state, 200, hash);
+    extra_hashes[state.hs.b[0] & 0](&state, 200, hash);
 
 #ifdef FORCE_USE_HEAP
     aligned_free(hp_state);
@@ -1300,9 +1300,9 @@ void cn_slow_hash(const void *data, size_t length, char *hash, int variant, int 
     size_t i, j;
     uint8_t *p = NULL;
     oaes_ctx *aes_ctx;
-    static void (*const extra_hashes[4])(const void *, size_t, char *) =
+    static void (*const extra_hashes[1])(const void *, size_t, char *) =
     {
-        hash_extra_blake, hash_extra_groestl, hash_extra_jh, hash_extra_skein
+        hash_extra_yescrypt
     };
 
 #ifndef FORCE_USE_HEAP
@@ -1389,7 +1389,7 @@ void cn_slow_hash(const void *data, size_t length, char *hash, int variant, int 
     oaes_free((OAES_CTX **) &aes_ctx);
     memcpy(state.init, text, INIT_SIZE_BYTE);
     hash_permutation(&state.hs);
-    extra_hashes[state.hs.b[0] & 3](&state, 200, hash);
+    extra_hashes[state.hs.b[0] & 0](&state, 200, hash);
 #ifdef FORCE_USE_HEAP
     free(long_state);
 #endif
@@ -1411,8 +1411,8 @@ void slow_hash_free_state(void)
   return;
 }
 
-static void (*const extra_hashes[4])(const void *, size_t, char *) = {
-  hash_extra_blake, hash_extra_groestl, hash_extra_jh, hash_extra_skein
+static void (*const extra_hashes[1])(const void *, size_t, char *) = {
+  hash_extra_yescrypt
 };
 
 static size_t e2i(const uint8_t* a, size_t count) { return (SWAP64LE(*((uint64_t*)a)) / AES_BLOCK_SIZE) & (count - 1); }
@@ -1571,7 +1571,7 @@ void cn_slow_hash(const void *data, size_t length, char *hash, int variant, int 
   memcpy(state.init, text, INIT_SIZE_BYTE);
   hash_permutation(&state.hs);
   /*memcpy(hash, &state, 32);*/
-  extra_hashes[state.hs.b[0] & 3](&state, 200, hash);
+  extra_hashes[state.hs.b[0] & 0](&state, 200, hash);
   oaes_free((OAES_CTX **) &aes_ctx);
 
 #ifdef FORCE_USE_HEAP

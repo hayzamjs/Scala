@@ -38,6 +38,7 @@ set(crypto_sources
   hash-extra-groestl.c
   hash-extra-jh.c
   hash-extra-skein.c
+  hash-extra-yescrypt.c
   hash.c
   jh.c
   keccak.c
@@ -65,6 +66,13 @@ set(crypto_private_headers
   oaes_config.h
   oaes_lib.h
   random.h
+  sha256.h
+  sysendian.h
+  yescrypt-best_c.h
+  yescrypt-opt_c.h
+  yescrypt-platform_c.h
+  yescrypt-simd_c.h
+  yescrypt.h
   skein.h
   skein_port.h)
 
