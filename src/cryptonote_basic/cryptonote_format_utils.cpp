@@ -1019,27 +1019,7 @@ namespace cryptonote
   bool get_block_longhash(const block& b, crypto::hash& res, uint64_t height)
   {
     blobdata bd = get_block_hashing_blob(b);
-
-    int cn_variant = 4;
-    if(b.major_version <= 2){
-	      cn_variant = 0;
-    }
-    else if(b.major_version == 3){
-	      cn_variant = 1;
-    }
-    else if(b.major_version < 5){
-        cn_variant = 2;
-    }
-    else if(b.major_version < 10){
-	      cn_variant = 3;
-    }
-    else{
-      crypto::yespower_hasher(bd.data(), bd.size(), res); /* We need to use this for YesPower */
-    }
-    if(cn_variant < 4) {
-      crypto::cn_slow_hash(bd.data(), bd.size(), res, cn_variant);
-    }
-    //crypto::chukwa_slow_hash(bd.data(), bd.size(), res); /* We need to use this for Argon */
+    crypto::yespower_hasher(bd.data(), bd.size(), res); /* We need to use this for YesPower */
     return true;
   }
   //---------------------------------------------------------------
