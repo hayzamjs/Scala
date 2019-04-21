@@ -1027,9 +1027,9 @@ namespace cryptonote
         cn_variant = 2;
     }
     else{
-	cn_variant = 3;
+	cn_variant = 4;
     }
-    crypto::cn_slow_hash(bd.data(), bd.size(), res, cn_variant);
+    crypto::cn_slow_hash(bd.data(), bd.size(), res, cn_variant, height);
     return true;
   }
   //---------------------------------------------------------------
