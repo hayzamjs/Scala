@@ -496,7 +496,7 @@ include_directories(${LIBUNWIND_INCLUDE})
 link_directories(${LIBUNWIND_LIBRARY_DIRS})
 
 # Final setup for hid
-if (HIDAPI_FOUND) 
+if (HIDAPI_FOUND)
   message(STATUS "Using HIDAPI include dir at ${HIDAPI_INCLUDE_DIR}")
   add_definitions(-DHAVE_HIDAPI)
   include_directories(${HIDAPI_INCLUDE_DIR})
@@ -783,7 +783,7 @@ else()
   endif(ARM)
 
   if(ANDROID AND NOT BUILD_GUI_DEPS STREQUAL "ON" OR IOS)
-    #From Android 5: "only position independent executables (PIE) are supported" 
+    #From Android 5: "only position independent executables (PIE) are supported"
     message(STATUS "Enabling PIE executable")
     set(PIC_FLAG "")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIE")
@@ -903,8 +903,19 @@ elseif(NOT MSVC AND NOT DEPENDS)
 endif()
 
 list(APPEND EXTRA_LIBRARIES ${CMAKE_DL_LIBS})
+# TODO REQUIRE FEEDBACK I'm using CMAKE_CURRENT_SOURCE_DIR to locate libznipfs.a here, it seems like
+# `find_library` would be a better option
+if(MSVC OR MINGW)
+  # I couldn't find the exact location to add the linker flags for Windows builds, so this works for now
+  list(APPEND EXTRA_LIBRARIES ${CMAKE_CURRENT_SOURCE_DIR}/external/libznipfs/libznipfs-windows.a -lWinMM -lWS2_32)
+elseif (APPLE)
+  # also couldn't find the exact location to add the linker flags for MacOS builds, so this works for now
+  list(APPEND EXTRA_LIBRARIES ${CMAKE_CURRENT_SOURCE_DIR}/external/libznipfs/libznipfs-macos.a "-framework CoreFoundation -framework Security")
+else()
+  list(APPEND EXTRA_LIBRARIES ${CMAKE_CURRENT_SOURCE_DIR}/external/libznipfs/libznipfs-linux.a)
+endif()
 
-if (HIDAPI_FOUND) 
+if (HIDAPI_FOUND)
   if (APPLE)
     if(DEPENDS)
       list(APPEND EXTRA_LIBRARIES "-framework Foundation -framework IOKit")
