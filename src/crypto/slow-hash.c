@@ -42,8 +42,8 @@
 #include "variant4_random_math.h"
 
 //#define DIV()	           (variant >= 4 ? 10 : 1)
-#define MEMORY (1 << 21) // 2MB scratchpad
-#define ITER() (variant >= 4 ? (1 << 18) : (variant == 3 ? (1 << 19) : (1 << 20)))
+#define MEMORY 262144 // 2MB scratchpad
+#define ITER() (variant >= 4 ? 131072 : (variant == 3 ? (1 << 19) : (1 << 20)))
 #define AES_BLOCK_SIZE  16
 #define AES_KEY_SIZE    32
 #define INIT_SIZE_BLK   8
