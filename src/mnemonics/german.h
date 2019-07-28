@@ -1,4 +1,4 @@
-// Word list created by Torque contributor Shrikez
+// Word list created by Scala contributor Shrikez
 // 
 // Copyright (c) 2014-2018, The MoNerO Project
 // 

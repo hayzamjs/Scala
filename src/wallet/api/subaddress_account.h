@@ -29,7 +29,7 @@
 #include "wallet/api/wallet2_api.h"
 #include "wallet/wallet2.h"
 
-namespace Torque {
+namespace Scala {
 
 class WalletImpl;
 

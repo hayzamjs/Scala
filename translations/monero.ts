@@ -2,7 +2,7 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
-    <name>Torque::AddressBookImpl</name>
+    <name>Scala::AddressBookImpl</name>
     <message>
         <location filename="../src/wallet/api/address_book.cpp" line="53"/>
         <source>Invalid destination address</source>
@@ -25,7 +25,7 @@
     </message>
 </context>
 <context>
-    <name>Torque::PendingTransactionImpl</name>
+    <name>Scala::PendingTransactionImpl</name>
     <message>
         <location filename="../src/wallet/api/pending_transaction.cpp" line="91"/>
         <source>Attempting to save transaction to file, but specified file(s) exist. Exiting to not risk overwriting. File:</source>
@@ -78,7 +78,7 @@
     </message>
 </context>
 <context>
-    <name>Torque::UnsignedTransactionImpl</name>
+    <name>Scala::UnsignedTransactionImpl</name>
     <message>
         <location filename="../src/wallet/api/unsigned_transaction.cpp" line="75"/>
         <source>This is a watch only wallet</source>
@@ -132,7 +132,7 @@
     </message>
 </context>
 <context>
-    <name>Torque::WalletImpl</name>
+    <name>Scala::WalletImpl</name>
     <message>
         <location filename="../src/wallet/api/wallet.cpp" line="1354"/>
         <source>payment id has invalid format, expected 16 or 64 character hex string: </source>
@@ -1508,7 +1508,7 @@ This transaction will unlock on block %llu, in approximately %s days (assuming 2
     </message>
     <message>
         <location filename="../src/simplewallet/simplewallet.cpp" line="2283"/>
-        <source>Donate &lt;amount&gt; to the development team (donate.gettorque.org).</source>
+        <source>Donate &lt;amount&gt; to the development team (donate.getscala.org).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2073,7 +2073,7 @@ Otherwise, you prove the reserve of the smallest possible amount above &lt;amoun
     </message>
     <message>
         <location filename="../src/simplewallet/simplewallet.cpp" line="2650"/>
-        <source>torque, millinero, micronero, nanonero, piconero</source>
+        <source>scala, millinero, micronero, nanonero, piconero</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2468,7 +2468,7 @@ Otherwise, you prove the reserve of the smallest possible amount above &lt;amoun
 To start synchronizing with the daemon, use the &quot;refresh&quot; command.
 Use the &quot;help&quot; command to see the list of available commands.
 Use &quot;help &lt;command&gt;&quot; to see a command&apos;s documentation.
-Always use the &quot;exit&quot; command when closing torque-wallet-cli to save 
+Always use the &quot;exit&quot; command when closing scala-wallet-cli to save 
 your current session&apos;s state. Otherwise, you might need to synchronize 
 your wallet again (your wallet keys are NOT at risk in any case).
 </source>
@@ -3419,7 +3419,7 @@ Transaction </source>
     </message>
     <message>
         <location filename="../src/simplewallet/simplewallet.cpp" line="5799"/>
-        <source>Donating %s %s to The MoNerO Project (donate.gettorque.org or %s).</source>
+        <source>Donating %s %s to The MoNerO Project (donate.getscala.org or %s).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3915,8 +3915,8 @@ Outputs per *: </source>
    Set the fee to default/unimportant/normal/elevated/priority.
  confirm-missing-payment-id &lt;1|0&gt;
  ask-password &lt;0|1|2   (or never|action|decrypt)&gt;
- unit &lt;torque|millinero|micronero|nanonero|piconero&gt;
-   Set the default torque (sub-)unit.
+ unit &lt;scala|millinero|micronero|nanonero|piconero&gt;
+   Set the default scala (sub-)unit.
  min-outputs-count [n]
    Try to keep at least that many outputs of value at least min-outputs-value.
  min-outputs-value [n]
@@ -3932,12 +3932,12 @@ Outputs per *: </source>
  auto-low-priority &lt;1|0&gt;
    Whether to automatically use the low priority fee level when it&apos;s safe to do so.
  segregate-pre-fork-outputs &lt;1|0&gt;
-   Set this if you intend to spend outputs on both Torque AND a key reusing fork.
+   Set this if you intend to spend outputs on both Scala AND a key reusing fork.
  key-reuse-mitigation2 &lt;1|0&gt;
-   Set this if you are not sure whether you will spend on a key reusing Torque fork later.
+   Set this if you are not sure whether you will spend on a key reusing Scala fork later.
 subaddress-lookahead &lt;major&gt;:&lt;minor&gt;
    Set the lookahead sizes for the subaddress hash table.
-   Set this if you are not sure whether you will spend on a key reusing Torque fork later.
+   Set this if you are not sure whether you will spend on a key reusing Scala fork later.
  segregation-height &lt;n&gt;
    Set to the height of a key reusing fork you want to use, 0 to use default.</source>
         <translation type="unfinished"></translation>
@@ -4425,7 +4425,7 @@ Grand total:
     </message>
     <message>
         <location filename="../src/simplewallet/simplewallet.cpp" line="333"/>
-        <source> Torque Address = </source>
+        <source> Scala Address = </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4586,9 +4586,9 @@ Grand total:
     </message>
     <message>
         <location filename="../src/simplewallet/simplewallet.cpp" line="8074"/>
-        <source>This is the command line torque wallet. It needs to connect to a torque
+        <source>This is the command line scala wallet. It needs to connect to a scala
 daemon to work correctly.
-WARNING: Do not reuse your Torque keys on another fork, UNLESS this fork has key reuse mitigations built in. Doing so will harm your privacy.</source>
+WARNING: Do not reuse your Scala keys on another fork, UNLESS this fork has key reuse mitigations built in. Doing so will harm your privacy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4608,7 +4608,7 @@ WARNING: Do not reuse your Torque keys on another fork, UNLESS this fork has key
     </message>
     <message>
         <location filename="../src/simplewallet/simplewallet.cpp" line="133"/>
-        <source>The newly created transaction will not be relayed to the torque network</source>
+        <source>The newly created transaction will not be relayed to the scala network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4841,12 +4841,12 @@ WARNING: Do not reuse your Torque keys on another fork, UNLESS this fork has key
     </message>
     <message>
         <location filename="../src/wallet/wallet2.cpp" line="1271"/>
-        <source>Password is needed to compute key image for incoming torque</source>
+        <source>Password is needed to compute key image for incoming scala</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/wallet/wallet2.cpp" line="1272"/>
-        <source>Invalid password: password is needed to compute key image for incoming torque</source>
+        <source>Invalid password: password is needed to compute key image for incoming scala</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4926,7 +4926,7 @@ WARNING: Do not reuse your Torque keys on another fork, UNLESS this fork has key
     </message>
     <message>
         <location filename="../src/wallet/wallet_rpc_server.cpp" line="3495"/>
-        <source>This is the RPC torque wallet. It needs to connect to a torque
+        <source>This is the RPC scala wallet. It needs to connect to a scala
 daemon to work correctly.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5039,7 +5039,7 @@ daemon to work correctly.</source>
     </message>
     <message>
         <location filename="../src/wallet/wallet_args.cpp" line="144"/>
-        <source>This is the command line torque wallet. It needs to connect to a torque
+        <source>This is the command line scala wallet. It needs to connect to a scala
 daemon to work correctly.</source>
         <translation type="unfinished"></translation>
     </message>

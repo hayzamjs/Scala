@@ -109,12 +109,12 @@ int main(int argc, char* argv[])
   SL(tools::wallet2::unsigned_tx_set);
   SL(tools::wallet2::signed_tx_set);
 
-  SL(Torque::WalletImpl);
-  SL(Torque::AddressBookRow);
-  SL(Torque::TransactionInfoImpl);
-  SL(Torque::TransactionHistoryImpl);
-  SL(Torque::PendingTransactionImpl);
-  SL(Torque::UnsignedTransactionImpl);
+  SL(Scala::WalletImpl);
+  SL(Scala::AddressBookRow);
+  SL(Scala::TransactionInfoImpl);
+  SL(Scala::TransactionHistoryImpl);
+  SL(Scala::PendingTransactionImpl);
+  SL(Scala::UnsignedTransactionImpl);
 
   return 0;
 }

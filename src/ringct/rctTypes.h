@@ -1,4 +1,4 @@
-// Copyright (c) 2016, Torque Research Labs
+// Copyright (c) 2016, Scala Research Labs
 //
 // Author: Shen Noether <shen.noether@gmx.com>
 //
@@ -61,7 +61,7 @@ extern "C" {
 #define DP(x)
 #endif
 
-//atomic units of torques
+//atomic units of scalas
 #define ATOMS 64
 
 //for printing large ints
@@ -130,7 +130,7 @@ namespace rct {
         BEGIN_SERIALIZE_OBJECT()
           FIELD(mask)
           FIELD(amount)
-          // FIELD(senderPk) // not serialized, as we do not use it in torque currently
+          // FIELD(senderPk) // not serialized, as we do not use it in scala currently
         END_SERIALIZE()
     };
 

@@ -73,8 +73,8 @@ file(COPY
   data/wallet_9svHk1.keys
   data/wallet_9svHk1
   data/outputs
-  data/unsigned_torque_tx
-  data/signed_torque_tx
+  data/unsigned_scala_tx
+  data/signed_scala_tx
   DESTINATION data)
 
 add_subdirectory(core_tests)

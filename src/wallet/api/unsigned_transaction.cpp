@@ -42,7 +42,7 @@
 
 using namespace std;
 
-namespace Torque {
+namespace Scala {
 
 UnsignedTransaction::~UnsignedTransaction() {}
 
@@ -317,5 +317,5 @@ uint64_t UnsignedTransactionImpl::minMixinCount() const
 
 } // namespace
 
-namespace Bittorque = Torque;
+namespace Bitscala = Scala;
 

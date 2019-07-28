@@ -47,9 +47,9 @@ else()
   set(Blocks "")
 endif()
 
-torque_private_headers(cryptonote_core
+scala_private_headers(cryptonote_core
   ${cryptonote_core_private_headers})
-torque_add_library(cryptonote_core
+scala_add_library(cryptonote_core
   ${cryptonote_core_sources}
   ${cryptonote_core_headers}
   ${cryptonote_core_private_headers})

@@ -212,23 +212,23 @@ namespace cryptonote
   {
     std::vector<std::string> records;
 
-    // All four TorquePulse domains have DNSSEC on and valid
-    static const std::vector<std::string> dns_urls = { "checkpoints.torquepulse.se"
-						     , "checkpoints.torquepulse.org"
-						     , "checkpoints.torquepulse.net"
-						     , "checkpoints.torquepulse.co"
+    // All four ScalaPulse domains have DNSSEC on and valid
+    static const std::vector<std::string> dns_urls = { "checkpoints.scalapulse.se"
+						     , "checkpoints.scalapulse.org"
+						     , "checkpoints.scalapulse.net"
+						     , "checkpoints.scalapulse.co"
     };
 
-    static const std::vector<std::string> testnet_dns_urls = { "testpoints.torquepulse.se"
-							     , "testpoints.torquepulse.org"
-							     , "testpoints.torquepulse.net"
-							     , "testpoints.torquepulse.co"
+    static const std::vector<std::string> testnet_dns_urls = { "testpoints.scalapulse.se"
+							     , "testpoints.scalapulse.org"
+							     , "testpoints.scalapulse.net"
+							     , "testpoints.scalapulse.co"
     };
 
-    static const std::vector<std::string> stagenet_dns_urls = { "stagenetpoints.torquepulse.se"
-                   , "stagenetpoints.torquepulse.org"
-                   , "stagenetpoints.torquepulse.net"
-                   , "stagenetpoints.torquepulse.co"
+    static const std::vector<std::string> stagenet_dns_urls = { "stagenetpoints.scalapulse.se"
+                   , "stagenetpoints.scalapulse.org"
+                   , "stagenetpoints.scalapulse.net"
+                   , "stagenetpoints.scalapulse.co"
     };
 
     if (!tools::dns_utils::load_txt_records_from_dns(records, nettype == TESTNET ? testnet_dns_urls : nettype == STAGENET ? stagenet_dns_urls : dns_urls))

@@ -249,7 +249,7 @@ namespace boost
   {
     a & x.mask;
     a & x.amount;
-    // a & x.senderPk; // not serialized, as we do not use it in torque currently
+    // a & x.senderPk; // not serialized, as we do not use it in scala currently
   }
 
   template <class Archive>

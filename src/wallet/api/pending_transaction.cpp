@@ -43,7 +43,7 @@
 
 using namespace std;
 
-namespace Torque {
+namespace Scala {
 
 PendingTransaction::~PendingTransaction() {}
 
@@ -247,5 +247,5 @@ std::vector<std::string> PendingTransactionImpl::signersKeys() const {
 
 }
 
-namespace Bittorque = Torque;
+namespace Bitscala = Scala;
 

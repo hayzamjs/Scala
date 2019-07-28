@@ -37,7 +37,7 @@
 
 #include <vector>
 
-namespace Torque {
+namespace Scala {
   
 AddressBook::~AddressBook() {}
   
@@ -178,4 +178,4 @@ AddressBookImpl::~AddressBookImpl()
 
 } // namespace
 
-namespace Bittorque = Torque;
+namespace Bitscala = Scala;

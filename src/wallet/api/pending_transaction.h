@@ -35,7 +35,7 @@
 #include <vector>
 
 
-namespace Torque {
+namespace Scala {
 
 class WalletImpl;
 class PendingTransactionImpl : public PendingTransaction
@@ -72,4 +72,4 @@ private:
 
 }
 
-namespace Bittorque = Torque;
+namespace Bitscala = Scala;

@@ -40,7 +40,7 @@
 #include <boost/thread/condition_variable.hpp>
 
 
-namespace Torque {
+namespace Scala {
 class TransactionHistoryImpl;
 class PendingTransactionImpl;
 class UnsignedTransactionImpl;
@@ -254,7 +254,7 @@ private:
 
 } // namespace
 
-namespace Bittorque = Torque;
+namespace Bitscala = Scala;
 
 #endif
 

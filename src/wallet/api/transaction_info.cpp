@@ -33,7 +33,7 @@
 
 using namespace std;
 
-namespace Torque {
+namespace Scala {
 
 TransactionInfo::~TransactionInfo() {}
 
@@ -140,4 +140,4 @@ uint64_t TransactionInfoImpl::unlockTime() const
 
 } // namespace
 
-namespace Bittorque = Torque;
+namespace Bitscala = Scala;

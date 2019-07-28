@@ -196,12 +196,12 @@ void mlog_configure(const std::string &filename_base, bool console, const std::s
     }
   });
   mlog_set_common_prefix();
-  const char *torque_log = getenv("MONERO_LOGS");
-  if (!torque_log)
+  const char *scala_log = getenv("MONERO_LOGS");
+  if (!scala_log)
   {
-    torque_log = get_default_categories(0);
+    scala_log = get_default_categories(0);
   }
-  mlog_set_log(torque_log);
+  mlog_set_log(scala_log);
 }
 
 void mlog_set_categories(const char *categories)

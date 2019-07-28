@@ -32,7 +32,7 @@
 #include <string>
 #include <ctime>
 
-namespace Torque {
+namespace Scala {
 
 class TransactionHistoryImpl;
 
@@ -84,4 +84,4 @@ private:
 
 } // namespace
 
-namespace Bittorque = Torque;
+namespace Bitscala = Scala;

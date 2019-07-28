@@ -1,5 +1,5 @@
 //#define DBG
-// Copyright (c) 2016, Torque Research Labs
+// Copyright (c) 2016, Scala Research Labs
 //
 // Author: Shen Noether <shen.noether@gmx.com>
 //

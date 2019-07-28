@@ -1,6 +1,6 @@
-# Torque
+# Scala
 
-Copyright (c) 2017-2019, The Torque Project
+Copyright (c) 2017-2019, The Scala Project
 
 Copyright (c) 2017, The Electroneum Project
 
@@ -15,48 +15,48 @@ Portions Copyright (c) 2017 The Masari Project
 
 ## Development Resources
 
-- Web: [torque.cash](https://torque.cash)
+- Web: [scala.cash](https://scala.cash)
 - Discord: [https://discord.gg/C9JVYHA](https://discord.gg/C9JVYHA)
-- Mail: [admin@torque.cash](mailto:admin@torque.cash)
-- Github: [https://github.com/torquecoin/Torque/](https://github.com/torquecoin/Torque/)
+- Mail: [admin@scala.cash](mailto:admin@scala.cash)
+- Github: [https://github.com/scalacoin/Scala/](https://github.com/scalacoin/Scala/)
 
 ## Introduction
 
-Torque is a private, secure, untraceable cryptocurrency.We bring the best from the whole cryptonight space, both from Monero and Electroneum. In Torque You are your bank, you control your funds, and nobody can trace your transfers unless you allow them to do so. Torque is a soft fork of monero trying to implement the best of proposals in the entire privacy coin ecosystem.
+Scala is a private, secure, untraceable cryptocurrency.We bring the best from the whole cryptonight space, both from Monero and Electroneum. In Scala You are your bank, you control your funds, and nobody can trace your transfers unless you allow them to do so. Scala is a soft fork of monero trying to implement the best of proposals in the entire privacy coin ecosystem.
 
-**Features:** We are trying to do things no cryptocurrency has ever done before. Full blown small device mining for instance smartphones, tablets, smart tv etc etc are in our scopes. P2P distributed seed lists are the next target after that. All this coupled with the below given features will make torque one of the best cryptocurrencies on the market.
+**Features:** We are trying to do things no cryptocurrency has ever done before. Full blown small device mining for instance smartphones, tablets, smart tv etc etc are in our scopes. P2P distributed seed lists are the next target after that. All this coupled with the below given features will make scala one of the best cryptocurrencies on the market.
 
-**Privacy:** Torque uses a cryptographically sound system to allow you to send and receive funds without your transactions being easily revealed on the blockchain (the ledger of transactions that everyone has). This ensures that your purchases, receipts, and all transfers remain absolutely private by default.
+**Privacy:** Scala uses a cryptographically sound system to allow you to send and receive funds without your transactions being easily revealed on the blockchain (the ledger of transactions that everyone has). This ensures that your purchases, receipts, and all transfers remain absolutely private by default.
 
 **Security:** Using the power of a distributed peer-to-peer consensus network, every transaction on the network is cryptographically secured. Individual wallets have a 25 word mnemonic seed that is only displayed once, and can be written down to backup the wallet. Wallet files are encrypted with a passphrase to ensure they are useless if stolen.
 
-**Untraceability:** By taking advantage of ring signatures, a special property of a certain type of cryptography, Torque is able to ensure that transactions are not only untraceable, but have an optional measure of ambiguity that ensures that transactions cannot easily be tied back to an individual user or computer.
+**Untraceability:** By taking advantage of ring signatures, a special property of a certain type of cryptography, Scala is able to ensure that transactions are not only untraceable, but have an optional measure of ambiguity that ensures that transactions cannot easily be tied back to an individual user or computer.
 
 **Timeline:** We are going to be implementing true small hashrate device mining and P2P distributed seed lists without hardcode by Q2 of 2018.
 
 ## About this Project
 
-This is the core implementation of Torque. It is open source and completely free to use without restrictions, except for those specified in the license agreement below. There are no restrictions on anyone creating an alternative implementation of Torque that uses the protocol and network in a compatible manner.
+This is the core implementation of Scala. It is open source and completely free to use without restrictions, except for those specified in the license agreement below. There are no restrictions on anyone creating an alternative implementation of Scala that uses the protocol and network in a compatible manner.
 
 As with many development projects, the repository on Github is considered to be the "staging" area for the latest changes. Before changes are merged into that branch on the main repository, they are tested by individual developers in their own branches, submitted as a pull request, and then subsequently tested by contributors who focus on testing and code reviews. That having been said, the repository should be carefully considered before using it in a production environment, unless there is a patch in the repository for a particular show-stopping issue you are experiencing. It is generally a better idea to use a tagged release for stability.
 
-**Anyone is welcome to contribute to Torque's codebase!** If you have a fix or code change, feel free to submit it as a pull request directly to the "master" branch. In cases where the change is relatively small or does not affect other parts of the codebase it may be merged in immediately by any one of the collaborators. On the other hand, if the change is particularly large or complex, it is expected that it will be discussed at length either well in advance of the pull request being submitted, or even directly on the pull request.
+**Anyone is welcome to contribute to Scala's codebase!** If you have a fix or code change, feel free to submit it as a pull request directly to the "master" branch. In cases where the change is relatively small or does not affect other parts of the codebase it may be merged in immediately by any one of the collaborators. On the other hand, if the change is particularly large or complex, it is expected that it will be discussed at length either well in advance of the pull request being submitted, or even directly on the pull request.
 
 ## Supporting the Project
 
-Torque development can be supported directly through donations.
+Scala development can be supported directly through donations.
 
-Both Torque and Bitcoin donations can be made to donate.gettorque.org if using a client that supports the [OpenAlias](https://openalias.org) standard
+Both Scala and Bitcoin donations can be made to donate.getscala.org if using a client that supports the [OpenAlias](https://openalias.org) standard
 
-The Torque donation address is: `Se3dRf8ZTUXKYivaTFU4KYczPcmMcwPZWEQ5HZmj3RRviFJ3w1mNhtgCWkn6VsnQcMBX1hyCUjZVuSo8X7yJTSYj1joP84WoT`
+The Scala donation address is: `Se3dRf8ZTUXKYivaTFU4KYczPcmMcwPZWEQ5HZmj3RRviFJ3w1mNhtgCWkn6VsnQcMBX1hyCUjZVuSo8X7yJTSYj1joP84WoT`
 
-The Bitcoin donation address is: `1XTCY5LqdBXRW6hcHtnuMU7c68mAyW6qm`
+The Bitcoin donation address is: `1XLAY5LqdBXRW6hcHtnuMU7c68mAyW6qm`
 
 ## License
 
 See [LICENSE](LICENSE).
 
-## Compiling Torque from Source
+## Compiling Scala from Source
 
 ### Dependencies
 The following table summarizes the tools and libraries required to build. A
@@ -99,15 +99,15 @@ Debian / Ubuntu one liner for all dependencies
 
 Clone recursively to pull-in needed submodule(s):
 
-`$ git clone --recursive https://github.com/torquecoin/Torque`
+`$ git clone --recursive https://github.com/scalacoin/Scala`
 
 If you already have a repo cloned, initialize and update:
 
-`$ cd torque && git submodule init && git submodule update`
+`$ cd scala && git submodule init && git submodule update`
 
 ### Build instructions
 
-Torque uses the CMake build system and a top-level [Makefile](Makefile) that
+Scala uses the CMake build system and a top-level [Makefile](Makefile) that
 invokes cmake commands as needed.
 
 #### On Linux and OS X
@@ -115,7 +115,7 @@ invokes cmake commands as needed.
 * Install the dependencies
 * Change to the root of the source code directory, change to the most recent release branch, and build:
 
-        cd torque
+        cd scala
         make
 
     *Optional*: If your machine has several cores and enough memory, enable
@@ -127,16 +127,16 @@ invokes cmake commands as needed.
     https://github.com/zeromq/cppzmq to `/usr/local/include` should fix that error.
     
     *Note*: The instructions above will compile the most stable release of the
-    Torque software. If you would like to use and test the most recent software,
+    Scala software. If you would like to use and test the most recent software,
     use ```git checkout master```. The master branch may contain updates that are
     both unstable and incompatible with release software, though testing is always 
     encouraged. 
 
 * The resulting executables can be found in `build/release/bin`
 
-* Add `PATH="$PATH:$HOME/torque/build/release/bin"` to `.profile`
+* Add `PATH="$PATH:$HOME/scala/build/release/bin"` to `.profile`
 
-* Run Torque with `torqued --detach`
+* Run Scala with `scalad --detach`
 
 * **Optional**: build and run the test suite to verify the binaries:
 
@@ -200,13 +200,13 @@ application.
 
 * To git clone, run:
 
-        git clone --recursive https://github.com/torquecoin/Torque.git
+        git clone --recursive https://github.com/scalacoin/Scala.git
 
 **Building**
 
 * Change to the cloned directory, run:
 	
-        cd torque
+        cd scala
 
 * If you are on a 64-bit system, run:
 

@@ -49,9 +49,9 @@ set(mnemonics_private_headers
   esperanto.h
   lojban.h)
 
-torque_private_headers(mnemonics
+scala_private_headers(mnemonics
   ${mnemonics_private_headers})
-torque_add_library(mnemonics
+scala_add_library(mnemonics
   ${mnemonics_sources}
   ${mnemonics_headers}
   ${mnemonics_private_headers})

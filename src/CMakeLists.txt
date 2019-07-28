@@ -39,13 +39,13 @@ if (NOT (MINGW OR APPLE OR FREEBSD OR OPENBSD OR DRAGONFLY))
   add_compile_options("${WARNINGS_AS_ERRORS_FLAG}") # applies only to targets that follow
 endif()
 
-function (torque_private_headers group)
+function (scala_private_headers group)
   source_group("${group}\\Private"
     FILES
       ${ARGN})
 endfunction ()
 
-function (torque_install_headers subdir)
+function (scala_install_headers subdir)
   install(
     FILES       ${ARGN}
     DESTINATION "include/${subdir}"
@@ -63,7 +63,7 @@ function (enable_stack_trace target)
   endif()
 endfunction()
 
-function (torque_add_executable name)
+function (scala_add_executable name)
   source_group("${name}"
     FILES
       ${ARGN})
@@ -82,11 +82,11 @@ function (torque_add_executable name)
   enable_stack_trace("${name}")
 endfunction ()
 
-function (torque_add_library name)
-    torque_add_library_with_deps(NAME "${name}" SOURCES ${ARGN})
+function (scala_add_library name)
+    scala_add_library_with_deps(NAME "${name}" SOURCES ${ARGN})
 endfunction()
 
-function (torque_add_library_with_deps)
+function (scala_add_library_with_deps)
   cmake_parse_arguments(MONERO_ADD_LIBRARY "" "NAME" "DEPENDS;SOURCES" ${ARGN})
   source_group("${MONERO_ADD_LIBRARY_NAME}" FILES ${MONERO_ADD_LIBRARY_SOURCES})
 
@@ -106,7 +106,7 @@ function (torque_add_library_with_deps)
 endfunction ()
 
 include(Version)
-torque_add_library(version SOURCES ${CMAKE_BINARY_DIR}/version.cpp DEPENDS genversion)
+scala_add_library(version SOURCES ${CMAKE_BINARY_DIR}/version.cpp DEPENDS genversion)
 
 add_subdirectory(common)
 add_subdirectory(crypto)
