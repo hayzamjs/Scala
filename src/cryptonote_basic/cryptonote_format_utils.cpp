@@ -1013,25 +1013,7 @@ namespace cryptonote
     return p;
   }
   //---------------------------------------------------------------
-  bool get_block_longhash(const block& b, crypto::hash& res, uint64_t height)
-  {
-    blobdata bd = get_block_hashing_blob(b);
-    int cn_variant;
-    if(b.major_version <= 2){
-	cn_variant = 0;
-    }
-    else if(b.major_version == 3){
-	cn_variant = 1;
-    }
-    else if(b.major_version < 5){
-        cn_variant = 2;
-    }
-    else{
-	cn_variant = 3;
-    }
-    crypto::cn_slow_hash(bd.data(), bd.size(), res, cn_variant);
-    return true;
-  }
+
   //---------------------------------------------------------------
   std::vector<uint64_t> relative_output_offsets_to_absolute(const std::vector<uint64_t>& off)
   {
@@ -1053,12 +1035,6 @@ namespace cryptonote
     return res;
   }
   //---------------------------------------------------------------
-  crypto::hash get_block_longhash(const block& b, uint64_t height)
-  {
-    crypto::hash p = null_hash;
-    get_block_longhash(b, p, height);
-    return p;
-  }
   //---------------------------------------------------------------
   bool parse_and_validate_block_from_blob(const blobdata& b_blob, block& b)
   {
