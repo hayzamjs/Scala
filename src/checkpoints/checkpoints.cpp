@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2018, The MoNerO Project
+// Copyright (c) 2014-2019, The Monero Project
 //
 // All rights reserved.
 //
@@ -28,20 +28,18 @@
 //
 // Parts of this file are originally copyright (c) 2012-2013 The Cryptonote developers
 
-#include "include_base_utils.h"
-
-using namespace epee;
-
 #include "checkpoints.h"
 
 #include "common/dns_utils.h"
-#include "include_base_utils.h"
 #include "string_tools.h"
 #include "storages/portable_storage_template_helper.h" // epee json include
 #include "serialization/keyvalue_serialization.h"
+#include <vector>
 
-#undef MONERO_DEFAULT_LOG_CATEGORY
-#define MONERO_DEFAULT_LOG_CATEGORY "checkpoints"
+using namespace epee;
+
+#undef SCALA_DEFAULT_LOG_CATEGORY
+#define SCALA_DEFAULT_LOG_CATEGORY "checkpoints"
 
 namespace cryptonote
 {
@@ -76,7 +74,7 @@ namespace cryptonote
   bool checkpoints::add_checkpoint(uint64_t height, const std::string& hash_str)
   {
     crypto::hash h = crypto::null_hash;
-    bool r = epee::string_tools::parse_tpod_from_hex_string(hash_str, h);
+    bool r = epee::string_tools::hex_to_pod(hash_str, h);
     CHECK_AND_ASSERT_MES(r, false, "Failed to parse checkpoint hash string into binary representation!");
 
     // return false if adding at a height we already have AND the hash is different
@@ -163,10 +161,15 @@ namespace cryptonote
   {
     if (nettype == TESTNET)
     {
+      ADD_CHECKPOINT(0,     "48ca7cd3c8de5b6a4d53d2861fbdaedca141553559f9be9520068053cda8430b");
+      ADD_CHECKPOINT(1000000, "46b690b710a07ea051bc4a6b6842ac37be691089c0f7758cfeec4d5fc0b4a258");
+      ADD_CHECKPOINT(1058600, "12904f6b4d9e60fd875674e07147d2c83d6716253f046af7b894c3e81da7e1bd");
       return true;
     }
     if (nettype == STAGENET)
     {
+      ADD_CHECKPOINT(0,       "76ee3cc98646292206cd3e86f74d88b4dcc1d937088645e9b0cbca84b7ce74eb");
+      ADD_CHECKPOINT(10000,   "1f8b0ce313f8b9ba9a46108bfd285c45ad7c2176871fd41c3a690d4830ce2fd5");
       return true;
     }
     return true;
@@ -212,23 +215,23 @@ namespace cryptonote
   {
     std::vector<std::string> records;
 
-    // All four TorquePulse domains have DNSSEC on and valid
-    static const std::vector<std::string> dns_urls = { "checkpoints.torquepulse.se"
-						     , "checkpoints.torquepulse.org"
-						     , "checkpoints.torquepulse.net"
-						     , "checkpoints.torquepulse.co"
+    // All four ScalaPulse domains have DNSSEC on and valid
+    static const std::vector<std::string> dns_urls = { "checkpoints.scalapulse.se"
+						     , "checkpoints.scalapulse.org"
+						     , "checkpoints.scalapulse.net"
+						     , "checkpoints.scalapulse.co"
     };
 
-    static const std::vector<std::string> testnet_dns_urls = { "testpoints.torquepulse.se"
-							     , "testpoints.torquepulse.org"
-							     , "testpoints.torquepulse.net"
-							     , "testpoints.torquepulse.co"
+    static const std::vector<std::string> testnet_dns_urls = { "testpoints.scalapulse.se"
+							     , "testpoints.scalapulse.org"
+							     , "testpoints.scalapulse.net"
+							     , "testpoints.scalapulse.co"
     };
 
-    static const std::vector<std::string> stagenet_dns_urls = { "stagenetpoints.torquepulse.se"
-                   , "stagenetpoints.torquepulse.org"
-                   , "stagenetpoints.torquepulse.net"
-                   , "stagenetpoints.torquepulse.co"
+    static const std::vector<std::string> stagenet_dns_urls = { "stagenetpoints.scalapulse.se"
+                   , "stagenetpoints.scalapulse.org"
+                   , "stagenetpoints.scalapulse.net"
+                   , "stagenetpoints.scalapulse.co"
     };
 
     if (!tools::dns_utils::load_txt_records_from_dns(records, nettype == TESTNET ? testnet_dns_urls : nettype == STAGENET ? stagenet_dns_urls : dns_urls))
@@ -253,7 +256,7 @@ namespace cryptonote
         // parse the second part as crypto::hash,
         // if this fails move on to the next record
         std::string hashStr = record.substr(pos + 1);
-        if (!epee::string_tools::parse_tpod_from_hex_string(hashStr, hash))
+        if (!epee::string_tools::hex_to_pod(hashStr, hash))
         {
     continue;
         }
