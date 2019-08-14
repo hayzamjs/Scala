@@ -570,8 +570,7 @@ namespace nodetool
     }
     else
     {
-      full_addrs.insert("207.180.204.158:20188");
-      full_addrs.insert("149.91.82.185:20188");
+      full_addrs.insert("127.0.0.1:20188");
     }
     return full_addrs;
   }
